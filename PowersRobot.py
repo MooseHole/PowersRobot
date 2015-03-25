@@ -11,7 +11,7 @@ import requests
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://bitbucket.org/moosehole/powersrobot')
-r.login()
+r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 powerWords = ['secret', 'message']
 while True:
