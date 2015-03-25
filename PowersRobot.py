@@ -55,13 +55,13 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
-powerWords = ['[[battle '	: SetBattle, 
-	      '[[environment'	: SetEnvironment,
-	      '[[faction '	: SetFaction,
-	      '[[commander '	: SetCommander,
-	      '[[units '	: SetUnits,
-	      '[[confirm'	: DoConfirm,
-	      '[[delete'	: DoDelete]
+powerWords = {	'[[battle '	: SetBattle, 
+		'[[environment'	: SetEnvironment,
+		'[[faction '	: SetFaction,
+		'[[commander '	: SetCommander,
+		'[[units '	: SetUnits,
+		'[[confirm'	: DoConfirm,
+		'[[delete'	: DoDelete}
 r.send_message('Moose_Hole', 'HAY', 'SCRAEW YAEW')
 
 battle = ''
