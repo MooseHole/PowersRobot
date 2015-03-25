@@ -5,6 +5,7 @@ Battle program for Powers
 See https://bitbucket.org/moosehole/powersrobot/
 """
 
+import os
 import time
 import praw
 import requests
