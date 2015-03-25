@@ -14,7 +14,7 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
-powerWords = ['[[Battle ', '[[Environment', '[[Faction ', '[[Commander ', '[[Units ', '[[Confirm' ,'[[Delete']
+powerWords = ['[[battle ', '[[environment', '[[faction ', '[[commander ', '[[units ', '[[confirm' ,'[[delete']
 r.send_message('Moose_Hole', 'HAY', 'SCRAEW YAEW')
 
 while True:
@@ -26,4 +26,4 @@ while True:
 			outmsg = '[Powers related comment](%s)' % msg.body
 			r.send_message('Moose_Hole', 'Powers Message', outmsg)
 			msg.mark_as_read()
-	time.sleep(1800)
+	time.sleep(30)
