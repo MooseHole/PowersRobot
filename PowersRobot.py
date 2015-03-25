@@ -19,7 +19,7 @@ class Units:
 	def __init__(self, unit, amount):
 		self.unit = unit
 		self.amount = amount
-	def combatValue:
+	def combatValue():
 		return self.unit.combatValue * self.amount;
 
 class Commander:
