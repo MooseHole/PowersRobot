@@ -2,7 +2,7 @@
 Powers Robot Program
 
 Battle program for Powers
-See https://bitbucket.org/moosehole/powersrobot/
+See https://github.com/MooseHole/PowersRobot
 """
 
 import os
