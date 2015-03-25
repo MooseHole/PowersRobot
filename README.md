@@ -28,31 +28,21 @@ Example:
 /u/PowersRobot
 
 Output:  
-Test fight! is ready to begin in Plains!  
-* Good:  
-    * Users:  
-        * /u/Moose_Hole  
-    * Commanders:  
-        * Bucket  
-        * Wignit  
-    * Units:  Total Combat Value 1705  
-        * 1000 The Riverlands (CV 1705)  
-            * 400 The Riverlands Light Infantry (CV 400)  
-            * 100 The Riverlands Heavy Infantry (CV 200)  
-            * 250 The Riverlands Ranged Infantry (CV 475)  
-            * 150 The Riverlands Light Cavalry (CV 330)  
-            * 100 The Riverlands Heavy Cavalry (CV 300)  
-* Ebil  
-    * Users:  
-        * /u/Moose__Hole  
-        * /u/moosehole  
-    * Commanders:  
-        * Reaper  
-    * Units: Total Combat Value 1571  
-        * 1000 The Riverlands Light Infantry (CV 1000)  
-        * 20 The Riverlands Ranged Infantry (CV 38)  
-        * 10 The Westerlands Heavy Cavalry (CV 33)  
-        * 5 Zombies (CV 500)  
+Test fight!: Plains
+
+||Good|CV: 1705|||Ebil|CV:1571|||
+:---|:---|:---|:---|:---|:---|:---|:---|:---
+|**Users**|/u/Moose_Hole||||/u/Moose__Hole||||
+||||||/u/moosehole||||
+|**Commanders**|Bucket||||Reaper||||
+||Wignit||||||||
+|**Units**|Amount|Region|Type|CV|Amount|Region|Type|CV|
+||400|The Riverlands|Light Infantry|400|1000|The Riverlands|Light Infantry|1000|
+||100|The Riverlands|Heavy Infantry|200|20|The Riverlands|Ranged Infantry|38|
+||250|The Riverlands|Ranged Infantry|475|10|The Westerlands|Heavy Cavalry|33|
+||150|The Riverlands|Light Cavalry|330|5||Zombies|500|
+||100|The Riverlands|Heavy Cavalry|300|||||
+
 
 To begin battle:  
 /u/Moose_Hole respond [[Confirm]]  
