@@ -11,7 +11,7 @@ Parameters:
 [[Units FactionName Amount Kingdom|Type|CV]]  
 /u/BotName
 
-Example:
+Example:  
 [[Battle Test fight!]]  
 [[Environment Riverlands]]  
 [[Faction Good /u/Moose_Hole]]  
