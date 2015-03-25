@@ -15,6 +15,8 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 powerWords = ['[[Battle ', '[[Environment', '[[Faction ', '[[Commander ', '[[Units ', '[[Confirm' ,'[[Delete']
+r.send_message('Moose_Hole', 'HAY', 'SCRAEW YAEW')
+
 while True:
 	unread = r.get_unread(limit=None)
 	for msg in unread:
