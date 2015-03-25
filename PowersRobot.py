@@ -1,7 +1,7 @@
 """"
 Powers Robot Program
 
-Tutorial program for PRAW:
+Battle program for Powers
 See https://bitbucket.org/moosehole/powersrobot/
 """
 
@@ -11,17 +11,15 @@ import praw
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://bitbucket.org/moosehole/powersrobot')
 r.login()
-already_done = []
 
-prawWords = ['power']
+powerWords = ['secret', 'message']
 while True:
-    subreddit = r.get_subreddit('PowersRobot')
-    for submission in subreddit.get_hot(limit=10):
-        op_text = submission.selftext.lower()
-        has_praw = any(string in op_text for string in prawWords)
-        # Test if it contains a PRAW-related question
-        if submission.id not in already_done and has_praw:
-            msg = '[PRAW related thread](%s)' % submission.short_link
-            r.send_message('Moose_Hole', 'PRAW Thread', msg)
-            already_done.append(submission.id)
-    time.sleep(1800)
+	unread = r.get_unread(limit=None)
+	for msg in unread:
+		op_text = msg.body.lower()
+		has_power = any(string in op_text for string in powerWords)
+		if (has_power):
+			outmsg = '[Powers related comment](%s)' % msg.body
+			r.send_message('Moose_Hole', 'Powers Message', outmsg)
+			msg.mark_as_read()
+	time.sleep(1800)
