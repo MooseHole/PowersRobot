@@ -11,7 +11,7 @@ import praw
 import requests
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
-                'Url: https://bitbucket.org/moosehole/powersrobot')
+                'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 powerWords = ['[[Battle ', '[[Environment', '[[Faction ', '[[Commander ', '[[Units ', '[[Confirm' ,'[[Delete']
