@@ -7,6 +7,7 @@ See https://bitbucket.org/moosehole/powersrobot/
 
 import time
 import praw
+import requests
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://bitbucket.org/moosehole/powersrobot')
