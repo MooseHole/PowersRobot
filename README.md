@@ -4,7 +4,7 @@ Powers Robot for Reddit
 This bot is currently run from Heroku under https://powersrobot.herokuapp.com/
 
 
-Parameters:
+Parameters:  
 [[Battle BattleName]]  
 [[Faction FactionName /u/UserName]]  
 [[Commander FactionName CommanderName]]  
@@ -26,7 +26,7 @@ Example:
 [[Units Ebil 5 100]]  
 /u/PowersRobot
 
-Output:
+Output:  
 Test fight! is ready to begin in Riverlands!  
 * Good:  
     * Users:  
