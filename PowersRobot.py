@@ -40,7 +40,8 @@ while True:
 
 		# Prepare Battle object for new battle
 		battle.clear()
-		op_text = msg.body.lower()
+		orig_text = msg.body
+		op_text = orig_text.lower()
 
 		# Check each token
 		for powerWord in powerWords.keys():
@@ -58,7 +59,7 @@ while True:
 				end = op_text.find(']]', position)
 				if end > begin:
 					# Call the appropriate function for this token
-					powerWords[powerWord](op_text[begin:end].strip(), battle)
+					powerWords[powerWord](orig_text[begin:end].strip(), battle)
 
 		print ("<<>>")
 

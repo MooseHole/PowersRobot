@@ -164,12 +164,18 @@ class Battle:
 
 		output += "|**Users**"
 		for i in range(0, maxUsers):
+			if i > 0:
+				output += "|"
+
 			for faction in self.factions:
 				users = faction.getUsers()
 				output += "|"
+
 				if len(users) > i:
 					output += users[i]
+
 				output += "|||"
+
 			output += "\n"
 			
 		output += "|**Commanders**"
