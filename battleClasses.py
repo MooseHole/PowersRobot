@@ -25,8 +25,8 @@ class Units:
 		self.amount = amount	# The amount of the Unit in this group
 
 	# The strength of the group
-	def combatValue(self):
-		return self.unit.combatValue * self.amount
+	def getCombatValue(self):
+		return self.unit.getCombatValue() * self.amount
 
 	def getTableRow(self):
 		return "|" + self.amount + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
@@ -79,7 +79,7 @@ class Faction:
 		cv = 0
 
 		for units in self.units:
-			cv += units.combatValue()
+			cv += units.getCombatValue()
 
 		return cv
 
