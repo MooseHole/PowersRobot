@@ -165,14 +165,13 @@ while True:
 		op_text = msg.body.lower()
 		for powerWord in powerWords.keys():
 			position = 0
-			part = 0
+			end = 0
 			while True:
-				position = op_text[part:].find(powerWord)
+				position = op_text.find(powerWord, end)
 				if position < 0:
 					break
-				begin = op_text.find(' ', position+part)
-				end = op_text.find(']]', position+part)
-				part = end
+				begin = op_text.find(' ', position)
+				end = op_text.find(']]', position)
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end].strip(), battle)
 		print ("<<>>")
