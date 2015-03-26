@@ -37,7 +37,7 @@ class Faction:
 	def __init__(self, name):
 		self.name = name
 
-class Environment:
+class Terrain:
 	def __init__(self, name=''):
 		self.name = name
 	def __str__(self):
@@ -51,19 +51,22 @@ class Battle:
 	def addFaction(self, faction):
 		if faction not in self.factions:
 			self.factions.append(faction)
-	def addEnvironment(self, environment):
-		self.environment = environment
+	def addTerrain(self, terrain):
+		self.terrain = terrain
 	def isValid(self):
 		print ("Battle checking valid for " + self.name + " length " + str(len(self.name)))
 		return len(self.name) > 0
 	def clear(self):
 		self.name = ''
 		self.factions = []
-		self.environment = Environment()
+		self.terrain = Terrain()
 	def __str__(self):
-		return self.name + " in " + str(self.environment) + "\n\n"
+		output = self.name + " in " + str(self.terrain)
+		for faction in self.factions:
+			output += "\n\n" + faction
+		return output
 
-r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
+r = praw.Reddit('python:moosehole.powersrobot:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
@@ -72,10 +75,10 @@ def SetBattle(text, battle):
 	battle.addBattle(text)
 	print ("This is the battle text: " + str(battle))
 
-def SetEnvironment(text, battle):
-	print ("Found an Environment: " + text)
+def SetTerrain(text, battle):
+	print ("Found a Terrain: " + text)
 	if battle != '':
-		battle.addEnvironment(Environment(text))
+		battle.addTerrain(Terrain(text))
 
 def SetFaction(text, battle):
 	print ("Found a Faction: " + text)
@@ -100,7 +103,7 @@ def DoDelete(text, battle):
 		
 
 powerWords = {	'[[battle '	: SetBattle, 
-		'[[environment'	: SetEnvironment,
+		'[[terrain'	: SetTerrain,
 		'[[faction '	: SetFaction,
 		'[[commander '	: SetCommander,
 		'[[units '	: SetUnits,
@@ -126,7 +129,8 @@ while True:
 		print ("<<>>")
 		if battle.isValid():
 			r.send_message('Moose_Hole', 'A Battle!', str(battle))
-			msg.mark_as_read()
+
+		msg.mark_as_read()
 		print ("^^^^")
 
 	time.sleep(30)
