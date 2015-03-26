@@ -23,7 +23,7 @@ class Unit:
 class Units:
 	def __init__(self, unit, amount):
 		self.unit = unit	# A Unit object
-		self.amount = amount	# The amount of the Unit in this group
+		self.amount = int(amount)	# The amount of the Unit in this group
 		print(self)
 
 	# The strength of the group
@@ -82,6 +82,7 @@ class Faction:
 		cv = 0
 
 		for units in self.units:
+			print ("Getting combat value from units: " + units)
 			cv += int(units.getCombatValue())
 
 		return cv
