@@ -50,7 +50,7 @@ def SetUnits(text, battle):
 		region = unitsParameters[:space]
 		name = unitsParameters[space:]
 
-	// Use a direct combat value if region is an integer
+	# Use a direct combat value if region is an integer
 	try:
 		cv = int(region)
 		region = ''
