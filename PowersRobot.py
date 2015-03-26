@@ -38,16 +38,21 @@ class Faction:
 		self.name = name
 
 class Environment:
-	def __init__(self, name):
+	def __init__(self, name=''):
 		self.name = name
 	def __str__(self):
 		return self.name
 	
 class Battle:
-	environment = ''
-	factions = []
 	def __init__(self, name=''):
 		self.name = name
+		self.factions = []
+		self.environment = Environment()
+	def addFaction(self, faction):
+		if faction not in self.factions:
+			self.factions.append(faction)
+	def addEnvironment(self, environment):
+		self.environment = environment
 	def __str__(self):
 		return self.name + " in " + environment + "\n\n"
 
@@ -55,33 +60,33 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
-def SetBattle(text):
+def SetBattle(text, battle):
 	print ("Found a Battle: " + text)
 	battle = Battle(text)
 
-def SetEnvironment(text):
+def SetEnvironment(text, battle):
 	print ("Found an Environment: " + text)
 	if battle != '':
-		battle.environment = Environment(text);
+		battle.addEnvironment(Environment(text))
 
-def SetFaction(text):
+def SetFaction(text, battle):
 	print ("Found a Faction: " + text)
 	if battle != '':
-		battle.faction.append(Faction(text));
+		battle.addFaction(Faction(text))
 
-def SetCommander(text):
+def SetCommander(text, battle):
 	print ("Found a Commander: " + text)
 	return
 		
-def SetUnits(text):
+def SetUnits(text, battle):
 	print ("Found a Units: " + text)
 	return
 		
-def DoConfirm(text):
+def DoConfirm(text, battle):
 	print ("Found a Confirm: " + text)
 	return
 		
-def DoDelete(text):
+def DoDelete(text, battle):
 	print ("Found a Delete: " + text)
 	return
 		
@@ -108,7 +113,7 @@ while True:
 				end = op_text.find(']]', position)
 				print ("Found " + powerWord + " at " + str(position) + " Begin " + str(begin) + " End: " + str(end))
 				if end > begin:
-					powerWords[powerWord](op_text[begin:end])
+					powerWords[powerWord](op_text[begin:end], battle)
 		if battle.name.length() > 0:
 			r.send_message('Moose_Hole', 'A Battle!', battle)
 			msg.mark_as_read()
