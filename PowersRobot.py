@@ -167,7 +167,7 @@ while True:
 			position = 0
 			end = 0
 			while True:
-				position = op_text.find(powerWord[end:])
+				position = op_text[end:].find(powerWord)
 				if position < 0:
 					break
 				begin = op_text.find(' ', position)
