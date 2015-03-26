@@ -13,7 +13,7 @@ class Unit:
 		return self.region
 
 	def getCombatValue(self):
-		return self.combatValue
+		return int(self.combatValue)
 
 	def __str__(self):
 		return self.name + " from " + self.region + " CV: " + self.combatValue
@@ -26,7 +26,7 @@ class Units:
 
 	# The strength of the group
 	def getCombatValue(self):
-		return self.unit.getCombatValue() * self.amount
+		return int(self.unit.getCombatValue()) * self.amount
 
 	def getTableRow(self):
 		return "|" + self.amount + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
@@ -79,7 +79,7 @@ class Faction:
 		cv = 0
 
 		for units in self.units:
-			cv += units.getCombatValue()
+			cv += int(units.getCombatValue())
 
 		return cv
 

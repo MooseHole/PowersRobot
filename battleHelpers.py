@@ -51,7 +51,7 @@ def SetUnits(text, battle):
 		name = unitsParameters[space:]
 
 	if region.isdigit():
-		cv = region
+		cv = int(region)
 		region = ''
 
 	unit = Unit(name, cv, region)
