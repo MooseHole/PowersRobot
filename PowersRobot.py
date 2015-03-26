@@ -118,6 +118,7 @@ while True:
 				print ("Found " + powerWord + " at " + str(position) + " Begin " + str(begin) + " End: " + str(end))
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end], battle)
+		print ("vvv")
 		if battle.isValid():
 			r.send_message('Moose_Hole', 'A Battle!', str(battle))
 			msg.mark_as_read()
