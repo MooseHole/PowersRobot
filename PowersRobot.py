@@ -63,7 +63,7 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 def SetBattle(text, battle):
 	print ("Found a Battle: " + text)
 	battle = Battle(text)
-	print ("This is the battle text: " + battle)
+	print ("This is the battle text: " + str(battle))
 
 def SetEnvironment(text, battle):
 	print ("Found an Environment: " + text)
@@ -116,6 +116,6 @@ while True:
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end], battle)
 		if len(battle.name) > 0:
-			r.send_message('Moose_Hole', 'A Battle!', battle)
+			r.send_message('Moose_Hole', 'A Battle!', str(battle))
 			msg.mark_as_read()
 	time.sleep(30)
