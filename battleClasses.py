@@ -4,7 +4,7 @@ class Unit:
 	def __init__(self, name, combatValue, region=''):
 		self.name = name	# What the unit is called
 		self.region = region	# Where the unit was created (affects combatValue)
-		self.combatValue = combatValue # Strength of the unit
+		self.combatValue = int(combatValue) # Strength of the unit
 
 	def getName(self):
 		return self.name
