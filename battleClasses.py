@@ -5,6 +5,7 @@ class Unit:
 		self.name = name	# What the unit is called
 		self.region = region	# Where the unit was created (affects combatValue)
 		self.combatValue = int(combatValue) # Strength of the unit
+		print(self)
 
 	def getName(self):
 		return self.name
@@ -23,6 +24,7 @@ class Units:
 	def __init__(self, unit, amount):
 		self.unit = unit	# A Unit object
 		self.amount = amount	# The amount of the Unit in this group
+		print(self)
 
 	# The strength of the group
 	def getCombatValue(self):
@@ -65,6 +67,7 @@ class Faction:
 		self.commanders.append(commander)
 
 	def addUnits(self, units):
+		print("Adding a units to " + self.name)
 		self.units.append(units)
 
 	# True if this Faction has the same name
