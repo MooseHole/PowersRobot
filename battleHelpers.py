@@ -31,7 +31,27 @@ def SetCommander(text, battle):
 		
 # Set a Units of the Battle in the correct Faction
 def SetUnits(text, battle):
-	return
+	factionSplit = GetFactionFromText(text, battle)
+	faction = factionSplit[0]
+	unitsParameters = factionSplit[1];
+	space = unitsParameters.find(' ')
+	amount = unitsParameters[:space]
+	unitsParameters = unitsParameters[space:]
+	space = unitsParameters.find(' ')
+
+	if space < 0:
+		region = unitsParameters
+	else:
+		region = unitsParameters[:space]
+		name = unitsParameters[space:]
+
+	if region.isdigit():
+		cv = region
+		region = ''
+
+	unit = Unit(name, cv, region)
+	units = Units(unit, amount)
+	faction.addUnits(units)
 
 # Process a confirmation
 def DoConfirm(text, battle):

@@ -6,6 +6,15 @@ class Unit:
 		self.region = region	# Where the unit was created (affects combatValue)
 		self.combatValue = combatValue # Strength of the unit
 
+	def getName(self):
+		return self.name
+
+	def getRegion(self):
+		return self.region
+
+	def getCombatValue(self):
+		return self.combatValue
+
 	def __str__(self):
 		return self.name + " from " + self.region + " CV: " + self.combatValue
 
@@ -18,6 +27,9 @@ class Units:
 	# The strength of the group
 	def combatValue():
 		return self.unit.combatValue * self.amount
+
+	def getTableRow():
+		return "|" + self.amount + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
 
 	def __str__(self):
 		return str(self.amount) + " " + str(self.unit) + "  CV: " + str(self.combatValue())
@@ -191,6 +203,22 @@ class Battle:
 					output += commanders[i]
 
 				output += "|||"
+
+			output += "\n"
+
+		output += "|**Units**"
+		for i in range (0, numFactions):
+			output += "|**Amount**|**Region**|**Type**|**CV**"
+
+		for i in range(0, maxUnits):
+			output += "|"
+
+			for faction in self.factions:
+				units = faction.getUnits()
+				output += "|"
+
+				if len(units) > i:
+					output += units[i].getTableRow()
 
 			output += "\n"
 			
