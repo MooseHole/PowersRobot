@@ -25,10 +25,10 @@ class Units:
 		self.amount = amount	# The amount of the Unit in this group
 
 	# The strength of the group
-	def combatValue():
+	def combatValue(self):
 		return self.unit.combatValue * self.amount
 
-	def getTableRow():
+	def getTableRow(self):
 		return "|" + self.amount + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
 
 	def __str__(self):
