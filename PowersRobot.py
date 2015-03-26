@@ -53,8 +53,10 @@ class Battle:
 			self.factions.append(faction)
 	def addEnvironment(self, environment):
 		self.environment = environment
+	def isValid(self):
+		return len(self.name) > 0
 	def __str__(self):
-		return self.name + " in " + str(environment) + "\n\n"
+		return self.name + " in " + str(self.environment) + "\n\n"
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
@@ -115,7 +117,7 @@ while True:
 				print ("Found " + powerWord + " at " + str(position) + " Begin " + str(begin) + " End: " + str(end))
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end], battle)
-		if len(battle.name) > 0:
+		if battle.isValid():
 			r.send_message('Moose_Hole', 'A Battle!', str(battle))
 			msg.mark_as_read()
 	time.sleep(30)
