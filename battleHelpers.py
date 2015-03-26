@@ -38,17 +38,21 @@ def SetUnits(text, battle):
 
 	factionSplit = GetFactionFromText(text, battle)
 	faction = factionSplit[0]
-	unitsParameters = factionSplit[1];
+
+	# unitsParameters: amount region|cv <<name>>
+	unitsParameters = factionSplit[1].strip();
 	space = unitsParameters.find(' ')
 	amount = unitsParameters[:space]
-	unitsParameters = unitsParameters[space:]
+
+	# unitsParameters: region|cv <<name>>
+	unitsParameters = unitsParameters[space:].strip()
 	space = unitsParameters.find(' ')
 
 	if space < 0:
-		region = unitsParameters
+		region = unitsParameters.strip()
 	else:
-		region = unitsParameters[:space]
-		name = unitsParameters[space:]
+		region = unitsParameters[:space].strip()
+		name = unitsParameters[space:].strip()
 
 	# Use a direct combat value if region is an integer
 	try:
