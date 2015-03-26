@@ -159,6 +159,7 @@ class Battle:
 		output += "\n"
 
 		# Column alignment
+		output += "|"
 		for i in range (0, numColumns):
 			output += ":--|"
 		output += "\n"
