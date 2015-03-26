@@ -139,7 +139,7 @@ class Battle:
 
 		output += "|**Factions**"
 		for faction in self.factions:
-			output += "|**" + faction.getName() + "**|**CV: " + faction.getCombatValue() + "**||"
+			output += "|**" + faction.getName() + "**|**CV: " + str(faction.getCombatValue()) + "**||"
 		output += "\n"
 
 		# find maximum number of users in factions
