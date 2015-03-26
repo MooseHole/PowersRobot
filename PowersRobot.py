@@ -54,7 +54,7 @@ class Battle:
 	def addEnvironment(self, environment):
 		self.environment = environment
 	def __str__(self):
-		return self.name + " in " + environment + "\n\n"
+		return self.name + " in " + str(environment) + "\n\n"
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
