@@ -44,10 +44,10 @@ class Environment:
 		return self.name
 	
 class Battle:
-	def __init__(self, name=''):
+	def __init__(self):
+		self.clear()
+	def addBattle(self, name):
 		self.name = name
-		self.factions = []
-		self.environment = Environment()
 	def addFaction(self, faction):
 		if faction not in self.factions:
 			self.factions.append(faction)
@@ -56,6 +56,10 @@ class Battle:
 	def isValid(self):
 		print ("Battle checking valid for " + self.name + " length " + str(len(self.name)))
 		return len(self.name) > 0
+	def clear(self):
+		self.name = ''
+		self.factions = []
+		self.environment = Environment()
 	def __str__(self):
 		return self.name + " in " + str(self.environment) + "\n\n"
 
@@ -65,7 +69,7 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 def SetBattle(text, battle):
 	print ("Found a Battle: " + text)
-	battle = Battle(text)
+	battle.addBattle(text)
 	print ("This is the battle text: " + str(battle))
 
 def SetEnvironment(text, battle):
@@ -109,7 +113,7 @@ while True:
 	unread = r.get_unread(limit=None)
 	for msg in unread:
 		print ("vvvv")
-		battle = Battle()
+		battle.clear()
 		op_text = msg.body.lower()
 		for powerWord in powerWords.keys():
 			position = op_text.find(powerWord)
