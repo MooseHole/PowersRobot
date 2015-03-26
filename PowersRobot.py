@@ -99,8 +99,8 @@ while True:
 		for powerWord in powerWords.keys():
 			position = op_text.find(powerWord)
 			if position >= 0:
-			        begin = text.find(' ', position)
-				end = text.find(']]', position)
+				begin = op_text.find(' ', position)
+				end = op_text.find(']]', position)
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end])
 		if battle != '':
