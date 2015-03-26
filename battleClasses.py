@@ -59,6 +59,27 @@ class Faction:
 	def isFaction(self, factionName):
 		return self.name == factionName
 
+	def getName(self):
+		return self.name
+
+	# The strength of the entire Faction
+	def getCombatValue(self):
+		cv = 0
+
+		for units in self.units:
+			cv += units.combatValue()
+
+		return cv;	def getUsers(self)
+
+	def getUsers(self):
+		return self.users
+
+	def getCommanders(self):
+		return self.commanders
+
+	def getUnits(self):
+		return self.units
+
 	def __str__(self):
 		output = self.name
 		for user in self.users:
@@ -112,7 +133,48 @@ class Battle:
 		self.terrain = Terrain()
 
 	def __str__(self):
-		output = self.name + " in " + str(self.terrain)
+		output = self.name + " in " + str(self.terrain) + "\n\n"
+		numFactions = len(self.factions)
+		numColumns = 1 + (numFactions * 4)
+
+		output += "|**Factions**"
 		for faction in self.factions:
-			output += "\n\n" + str(faction)
+			output += "|**" + faction.getName() + "**|**CV: " + faction.getCombatValue() + "**||"
+		output += "\n"
+
+		# find maximum number of users in factions
+		maxUsers = 0
+		maxCommanders = 0
+		maxUnits = 0
+		for faction in self.factions:
+			numUsers = len(faction.getUsers())
+			numCommanders = len(faction.getCommanders())
+			numUnits = len(faction.getUnits())
+			if maxUsers < numUsers:
+				maxUsers = numUsers
+			if maxCommanders < numCommanders:
+				maxCommanders = numCommanders
+			if maxUnits < numUnits:
+				maxUnits = numUnits
+
+		output += "|**Users**"
+		for i in range(0, maxUsers):
+			for faction in self.factions:
+				users = faction.getUsers()
+				output += "|"
+				if len(users) > i:
+					output += users[i]
+				output += "|||"
+			output += "\n"
+			
+		output += "|**Commanders**"
+		for i in range(0, maxCommanders):
+			for faction in self.factions:
+				commanders = faction.getCommanders()
+				output += "|"
+				if len(commanders) > i:
+					output += commanders[i]
+				output += "|||"
+			output += "\n"
+			
 		return output
