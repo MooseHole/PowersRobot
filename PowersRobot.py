@@ -52,7 +52,7 @@ class Faction:
 	def addUnits(self, units):
 		self.units.append(units)
 	def isFaction(self, factionName):
-		return self.name = factionName
+		return self.name == factionName
 	def __str__(self):
 		output = self.name
 		for user in self.users:
