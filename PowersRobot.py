@@ -74,7 +74,7 @@ class Battle:
 		self.clear()
 	def addBattle(self, name):
 		self.name = name
-	def getFaction(self, factionName)
+	def getFaction(self, factionName):
 		# Check if existing
 		for faction in self.factions:
 			if faction.isFaction(factionName):
