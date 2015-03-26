@@ -31,6 +31,11 @@ def SetCommander(text, battle):
 		
 # Set a Units of the Battle in the correct Faction
 def SetUnits(text, battle):
+	name = ''
+	cv = 0
+	region = ''
+	amount = 0
+
 	factionSplit = GetFactionFromText(text, battle)
 	faction = factionSplit[0]
 	unitsParameters = factionSplit[1];
