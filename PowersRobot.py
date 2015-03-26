@@ -67,6 +67,7 @@ while True:
 		if battle.isValid():
 			# Process battle output
 			r.send_message('Moose_Hole', 'A Battle!', str(battle))
+			print (str(battle))
 
 		# Don't read this message again
 		msg.mark_as_read()
