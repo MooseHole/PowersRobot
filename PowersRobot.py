@@ -46,9 +46,7 @@ class Environment:
 class Battle:
 	environment = ''
 	factions = []
-	def __init__(self):
-		self.name = ''
-	def __init__(self, name):
+	def __init__(self, name=''):
 		self.name = name
 	def __str__(self):
 		return self.name + " in " + environment + "\n\n"
