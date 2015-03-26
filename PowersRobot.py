@@ -54,6 +54,7 @@ class Battle:
 	def addEnvironment(self, environment):
 		self.environment = environment
 	def isValid(self):
+		print ("Battle checking valid for " + self.name + " length " + str(len(self.name)))
 		return len(self.name) > 0
 	def __str__(self):
 		return self.name + " in " + str(self.environment) + "\n\n"
