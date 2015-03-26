@@ -46,6 +46,8 @@ class Environment:
 class Battle:
 	environment = ''
 	factions = []
+	def __init__(self):
+		self.name = ''
 	def __init__(self, name):
 		self.name = name
 	def __str__(self):
@@ -93,15 +95,13 @@ powerWords = {	'[[battle '	: SetBattle,
 		'[[units '	: SetUnits,
 		'[[confirm'	: DoConfirm,
 		'[[delete'	: DoDelete}
-r.send_message('Moose_Hole', 'HAY', 'SCRAEW YAEW')
 
-battle = ''
-
+battle = Battle()
 
 while True:
 	unread = r.get_unread(limit=None)
 	for msg in unread:
-		battle = ''
+		battle = Battle()
 		op_text = msg.body.lower()
 		for powerWord in powerWords.keys():
 			position = op_text.find(powerWord)
@@ -111,7 +111,7 @@ while True:
 				print ("Found " + powerWord + " at " + str(position) + " Begin " + str(begin) + " End: " + str(end))
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end])
-		if battle != '':
+		if battle.name.length() > 0:
 			r.send_message('Moose_Hole', 'A Battle!', battle)
 			msg.mark_as_read()
 	time.sleep(30)
