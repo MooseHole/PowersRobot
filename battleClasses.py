@@ -152,13 +152,13 @@ class Battle:
 		output += "|**Factions**"
 		for faction in self.factions:
 			output += "|**" + faction.getName() + "**|**CV: " + str(faction.getCombatValue()) + "**||"
-		output += "\n"
+		output += "|\n"
 
 		# Column alignment
 		output += "|"
 		for i in range (0, numColumns):
-			output += ":--|"
-		output += "\n"
+			output += ":--"
+		output += "|\n"
 
 		# find maximum number of users in factions
 		maxUsers = 0
@@ -189,7 +189,7 @@ class Battle:
 
 				output += "|||"
 
-			output += "\n"
+			output += "|\n"
 			
 		output += "|**Commanders**"
 		for i in range(0, maxCommanders):
@@ -205,13 +205,13 @@ class Battle:
 
 				output += "|||"
 
-			output += "\n"
+			output += "|\n"
 
 		output += "|**Units**"
 		for i in range (0, numFactions):
 			output += "|**Amount**|**Region**|**Type**|**CV**"
 
-		output += "\n"
+		output += "|\n"
 
 		for i in range(0, maxUnits):
 			output += "|"
@@ -224,6 +224,6 @@ class Battle:
 				else:
 					output += "||||"
 
-			output += "\n"
+			output += "|\n"
 			
 		return output
