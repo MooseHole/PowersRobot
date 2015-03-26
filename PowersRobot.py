@@ -63,6 +63,7 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 def SetBattle(text, battle):
 	print ("Found a Battle: " + text)
 	battle = Battle(text)
+	print ("This is the battle text: " + battle)
 
 def SetEnvironment(text, battle):
 	print ("Found an Environment: " + text)
