@@ -6,7 +6,8 @@ This bot is currently run from Heroku under https://powersrobot.herokuapp.com/
 
 Parameters:  
 [[Battle BattleName]]  
-[[Faction FactionName /u/UserName]]  
+[[Faction FactionName]]  
+[[User FactionName /u/UserName]]  
 [[Commander FactionName CommanderName]]  
 [[Units FactionName Amount Region|Region Type|CV Name]]  
 /u/BotName
