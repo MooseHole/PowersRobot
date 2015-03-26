@@ -9,7 +9,7 @@ import os
 import time
 import praw
 import requests
-import battleClasses
+from battleClasses import *
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
