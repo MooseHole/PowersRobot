@@ -221,10 +221,11 @@ class Battle:
 
 			for faction in self.factions:
 				units = faction.getUnits()
-				output += "|"
 
 				if len(units) > i:
 					output += units[i].getTableRow()
+				else:
+					output += "||||"
 
 			output += "\n"
 			
