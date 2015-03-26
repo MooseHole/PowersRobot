@@ -146,7 +146,8 @@ def DoDelete(text, battle):
 	return
 		
 
-powerWords = {	'[[battle '	: SetBattle, 
+powerWords = {
+		'[[battle '	: SetBattle, 
 		'[[terrain'	: SetTerrain,
 		'[[faction '	: SetFaction,
 		'[[user '	: SetUser,
