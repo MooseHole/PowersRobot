@@ -17,7 +17,7 @@ class Units:
 
 	# The strength of the group
 	def combatValue():
-		return self.unit.combatValue * self.amount;
+		return self.unit.combatValue * self.amount
 
 	def __str__(self):
 		return str(self.amount) + " " + str(self.unit) + "  CV: " + str(self.combatValue())
@@ -69,7 +69,7 @@ class Faction:
 		for units in self.units:
 			cv += units.combatValue()
 
-		return cv;	def getUsers(self)
+		return cv
 
 	def getUsers(self):
 		return self.users
