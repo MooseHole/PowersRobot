@@ -1,3 +1,5 @@
+from battleClasses import *
+
 # Input: Parameters after the command token
 # Output: A Faction object and the rest of the parameters
 def GetFactionFromText(text, battle):
