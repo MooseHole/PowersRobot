@@ -142,6 +142,11 @@ class Battle:
 			output += "|**" + faction.getName() + "**|**CV: " + str(faction.getCombatValue()) + "**||"
 		output += "\n"
 
+		# Column alignment
+		for i in range (0, numColumns):
+			output += ":--|"
+		output += "\n"
+
 		# find maximum number of users in factions
 		maxUsers = 0
 		maxCommanders = 0
