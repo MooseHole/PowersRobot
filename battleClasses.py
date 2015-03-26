@@ -157,8 +157,8 @@ class Battle:
 		# Column alignment
 		output += "|"
 		for i in range (0, numColumns):
-			output += ":--"
-		output += "|\n"
+			output += ":--|"
+		output += "\n"
 
 		# find maximum number of users in factions
 		maxUsers = 0
