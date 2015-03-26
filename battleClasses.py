@@ -31,7 +31,7 @@ class Units:
 		return int(self.unit.getCombatValue()) * self.amount
 
 	def getTableRow(self):
-		return "|" + self.amount + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
+		return "|" + str(self.amount) + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
 
 	def __str__(self):
 		return str(self.amount) + " " + str(self.unit) + "  CV: " + str(self.getCombatValue())
