@@ -214,6 +214,8 @@ class Battle:
 		for i in range (0, numFactions):
 			output += "|**Amount**|**Region**|**Type**|**CV**"
 
+		output += "\n"
+
 		for i in range(0, maxUnits):
 			output += "|"
 
