@@ -63,7 +63,7 @@ class Battle:
 	def __str__(self):
 		output = self.name + " in " + str(self.terrain)
 		for faction in self.factions:
-			output += "\n\n" + faction
+			output += "\n\n" + str(faction)
 		return output
 
 r = praw.Reddit('python:moosehole.powersrobot:v0.0.2 (by /u/Moose_Hole)'
