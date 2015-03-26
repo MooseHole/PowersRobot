@@ -108,7 +108,7 @@ while True:
 			if position >= 0:
 				begin = op_text.find(' ', position)
 				end = op_text.find(']]', position)
-				print ("Found " + powerWord + " at " + position.str() + " Begin " + begin.str() + " End: " + end.str())
+				print ("Found " + powerWord + " at " + str(position) + " Begin " + str(begin) + " End: " + str(end))
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end])
 		if battle != '':
