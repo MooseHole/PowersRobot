@@ -50,9 +50,12 @@ def SetUnits(text, battle):
 		region = unitsParameters[:space]
 		name = unitsParameters[space:]
 
-	if region.isdigit():
+	// Use a direct combat value if region is an integer
+	try:
 		cv = int(region)
 		region = ''
+	except ValueError:
+		cv = 0
 
 	unit = Unit(name, cv, region)
 	units = Units(unit, amount)
