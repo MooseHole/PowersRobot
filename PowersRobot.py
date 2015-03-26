@@ -56,26 +56,33 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.1 (by /u/Moose_Hole)'
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 def SetBattle(text):
+	print ("Found a Battle: " + text)
 	battle = Battle(text)
 
 def SetEnvironment(text):
+	print ("Found an Environment: " + text)
 	if battle != '':
 		battle.environment = Environment(text);
 
 def SetFaction(text):
+	print ("Found a Faction: " + text)
 	if battle != '':
 		battle.faction.append(Faction(text));
 
 def SetCommander(text):
+	print ("Found a Commander: " + text)
 	return
 		
 def SetUnits(text):
+	print ("Found a Units: " + text)
 	return
 		
 def DoConfirm(text):
+	print ("Found a Confirm: " + text)
 	return
 		
 def DoDelete(text):
+	print ("Found a Delete: " + text)
 	return
 		
 
@@ -101,6 +108,7 @@ while True:
 			if position >= 0:
 				begin = op_text.find(' ', position)
 				end = op_text.find(']]', position)
+				print ("Found " + powerWord + " at " + position.str() + " Begin " + begin.str() + " End: " + end.str())
 				if end > begin:
 					powerWords[powerWord](op_text[begin:end])
 		if battle != '':
