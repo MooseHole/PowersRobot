@@ -6,7 +6,8 @@ This bot is currently run from Heroku under https://powersrobot.herokuapp.com/
 
 Parameters:  
 [[Battle BattleName]]  
-[[Faction FactionName /u/UserName]]  
+[[Faction FactionName]]  
+[[User FactionName /u/UserName]]  
 [[Commander FactionName CommanderName]]  
 [[Units FactionName Amount Region|Region Type|CV Name]]  
 /u/BotName
@@ -14,12 +15,13 @@ Parameters:
 Example:  
 [[Battle Test fight!]]  
 [[Terrain Plains]]  
-[[Faction Good /u/Moose_Hole]]  
-[[Faction Ebil /u/Moose__Hole]]  
-[[Faction Ebil /u/moosehole]]  
-[[Commander Bucket Good]]  
-[[Commander Wignit Good]]  
-[[Commander Reaper Ebil]]  
+[[Faction Good]]  
+[[User Good /u/Moose_Hole]]  
+[[User Ebil /u/Moose__Hole]]  
+[[User Ebil /u/moosehole]]  
+[[Commander Good Bucket]]  
+[[Commander Good Wignit]]  
+[[Commander Ebil Reaper]]  
 [[Units Good 1000 The Riverlands]]  
 [[Units Ebil 1000 The Riverlands Light Infantry]]  
 [[Units Ebil 20 The Riverlands Ranged Infantry]]  
