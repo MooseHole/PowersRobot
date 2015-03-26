@@ -103,7 +103,7 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
-def GetFactionFromText(text, battle)
+def GetFactionFromText(text, battle):
 	space = text.find(' ')
 	faction = battle.getFaction(text[:space])
 	return [faction, text[space:]]
