@@ -82,7 +82,7 @@ class Faction:
 		cv = 0
 
 		for units in self.units:
-			print ("Getting combat value from units: " + units)
+			print ("Getting combat value from units: " + str(units))
 			cv += int(units.getCombatValue())
 
 		return cv
