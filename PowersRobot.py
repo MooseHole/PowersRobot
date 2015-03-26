@@ -164,8 +164,12 @@ while True:
 		battle.clear()
 		op_text = msg.body.lower()
 		for powerWord in powerWords.keys():
-			position = op_text.find(powerWord)
-			if position >= 0:
+			position = 0
+			end = 0
+			while True:
+				position = op_text.find(powerWord[end:])
+				if position < 0:
+					break
 				begin = op_text.find(' ', position)
 				end = op_text.find(']]', position)
 				if end > begin:
