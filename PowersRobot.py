@@ -11,9 +11,12 @@ import praw
 import requests
 
 class Unit:
-	name = ''
-	region = ''
-	combatValue = ''
+	def __init__(self, unit, combatValue, region=''):
+		self.unit = unit
+		self.region = region
+		self.combatValue = combatValue
+	def __str__(self):
+		return self.name + " from " + self.region + " CV: " + self.combatValue
 
 class Units:
 	def __init__(self, unit, amount):
@@ -21,21 +24,44 @@ class Units:
 		self.amount = amount
 	def combatValue():
 		return self.unit.combatValue * self.amount;
+	def __str__(self):
+		return str(self.amount) + " " + str(self.unit) + "  CV: " + str(self.combatValue())
 
 class Commander:
 	def __init__(self, name):
 		self.name = name
+	def __str__(self):
+		return self.name
 
 class User:
 	def __init__(self, name):
 		self.name = name
+	def __str__(self):
+		return self.name
 
 class Faction:
-	users = []
-	commanders = []
-	units = []
 	def __init__(self, name):
 		self.name = name
+		self.users = []
+		self.commanders = []
+		self.units = []
+	def addUser(self, user)
+		self.users.append(user)
+	def addCommander(self, commander)
+		self.commanders.append(commander)
+	def addUnits(self, units)
+		self.units.append(units)
+	def isFaction(self, factionName)
+		return self.name = factionName
+	def __str__(self):
+		output = self.name
+		for user in self.users:
+			output += "\n\nUser: " + str(user)
+		for commander in self.commanders:
+			output += "\n\nCommander: " + str(commander)
+		for units in self.units:
+			output += "\n\nUnits: " + str(units)
+		return output
 
 class Terrain:
 	def __init__(self, name=''):
@@ -48,9 +74,16 @@ class Battle:
 		self.clear()
 	def addBattle(self, name):
 		self.name = name
-	def addFaction(self, faction):
-		if faction not in self.factions:
-			self.factions.append(faction)
+	def getFaction(self, factionName)
+		# Check if existing
+		for faction in self.factions:
+			if faction.isFaction(factionName):
+				return faction
+
+		# Create new
+		faction = Faction(factionName)
+		self.factions.append(faction)
+		return faction
 	def addTerrain(self, terrain):
 		self.terrain = terrain
 	def isValid(self):
@@ -70,6 +103,11 @@ r = praw.Reddit('python:moosehole.powersrobot:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
+def GetFactionFromText(text, battle)
+	space = text.find(' ')
+	faction = battle.getFaction(text[:space])
+	return [faction, text[space:]]
+	
 def SetBattle(text, battle):
 	print ("Found a Battle: " + text)
 	battle.addBattle(text)
@@ -83,16 +121,22 @@ def SetTerrain(text, battle):
 def SetFaction(text, battle):
 	print ("Found a Faction: " + text)
 	if battle != '':
-		battle.addFaction(Faction(text))
+		battle.getFaction(text)
 
+def SetUser(text, battle):
+	print ("Found a User: " + text)
+	factionSplit = GetFactionFromText(text, battle)
+	factionSplit[0].addUser(factionSplit[1])
+	
 def SetCommander(text, battle):
 	print ("Found a Commander: " + text)
-	return
+	factionSplit = GetFactionFromText(text, battle)
+	factionSplit[0].addCommander(factionSplit[1])
 		
 def SetUnits(text, battle):
 	print ("Found a Units: " + text)
 	return
-		
+
 def DoConfirm(text, battle):
 	print ("Found a Confirm: " + text)
 	return
@@ -105,6 +149,7 @@ def DoDelete(text, battle):
 powerWords = {	'[[battle '	: SetBattle, 
 		'[[terrain'	: SetTerrain,
 		'[[faction '	: SetFaction,
+		'[[user '	: SetUser,
 		'[[commander '	: SetCommander,
 		'[[units '	: SetUnits,
 		'[[confirm'	: DoConfirm,
@@ -123,9 +168,8 @@ while True:
 			if position >= 0:
 				begin = op_text.find(' ', position)
 				end = op_text.find(']]', position)
-				print ("Found " + powerWord + " at " + str(position) + " Begin " + str(begin) + " End: " + str(end))
 				if end > begin:
-					powerWords[powerWord](op_text[begin:end], battle)
+					powerWords[powerWord](op_text[begin:end].strip(), battle)
 		print ("<<>>")
 		if battle.isValid():
 			r.send_message('Moose_Hole', 'A Battle!', str(battle))
