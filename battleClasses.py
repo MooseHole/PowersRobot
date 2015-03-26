@@ -17,7 +17,7 @@ class Unit:
 		return int(self.combatValue)
 
 	def __str__(self):
-		return self.name + " from " + self.region + " CV: " + self.combatValue
+		return self.name + " from " + self.region + " CV: " + str(self.combatValue)
 
 # A group of one type of Unit
 class Units:
@@ -34,7 +34,7 @@ class Units:
 		return "|" + self.amount + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.unit.getCombatValue())
 
 	def __str__(self):
-		return str(self.amount) + " " + str(self.unit) + "  CV: " + str(self.combatValue())
+		return str(self.amount) + " " + str(self.unit) + "  CV: " + str(self.getCombatValue())
 
 # A named character
 class Commander:
