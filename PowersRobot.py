@@ -45,13 +45,13 @@ class Faction:
 		self.users = []
 		self.commanders = []
 		self.units = []
-	def addUser(self, user)
+	def addUser(self, user):
 		self.users.append(user)
-	def addCommander(self, commander)
+	def addCommander(self, commander):
 		self.commanders.append(commander)
-	def addUnits(self, units)
+	def addUnits(self, units):
 		self.units.append(units)
-	def isFaction(self, factionName)
+	def isFaction(self, factionName):
 		return self.name = factionName
 	def __str__(self):
 		output = self.name
