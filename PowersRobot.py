@@ -33,8 +33,11 @@ battle = Battle()
 
 # Main loop
 while True:
+	# Check own subreddit
+	unread = r.search(subreddit:os.environ['REDDIT_USER'], title:'/r/* Settings')
+
 	# Check unread messages
-	unread = r.get_unread(limit=None)
+#	unread = r.get_unread(limit=None)
 	for msg in unread:
 		print ("vvvv")
 
