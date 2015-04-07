@@ -34,7 +34,7 @@ battle = Battle()
 # Main loop
 while True:
 	# Check own subreddit
-	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "', title:'/r/* Settings'"
+	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "', title:'Settings /r/*'"
 	print (queryString)
 	unread = r.search(queryString)
 	print (unread)
