@@ -4,14 +4,14 @@ class Unit:
 	def __init__(self, name, combatValue, percentage=0, region=''):
 		self.name = name	# What the unit is called
 		self.region = region	# Where the unit was created (affects combatValue)
-		self.percentage = percentage	# The normal mix of this unit
+		self.percentage = float(percentage) / float(100)	# The normal mix of this unit
 		self.combatValue = float(combatValue) # Strength of the unit
 
 	def getName(self):
 		return self.name
 
 	def getPercentage(self):
-		return self.percentage
+		return float(self.percentage)
 
 	def getRegion(self):
 		return self.region

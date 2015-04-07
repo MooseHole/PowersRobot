@@ -68,7 +68,7 @@ def SetUnits(text, battle):
 			# Get the standard setup from the region
 			unitArray = battle.getSetup().getAllUnits(region)
 			for unit in unitArray:
-				units = Units(unit, amount * (unit.getPercentage() / 100))
+				units = Units(unit, amount * unit.getPercentage())
 				faction.addUnits(units)
 		else:
 			unit = battle.getSetup().getUnit(region, name)
