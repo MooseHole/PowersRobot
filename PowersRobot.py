@@ -81,6 +81,7 @@ while True:
 	# Check own subreddit
 	settingsPrefix = "Settings /r/"
 	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
+	print(queryString)
 	unread = r.search(queryString)
 
 	for setting in unread:
