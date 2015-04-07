@@ -74,7 +74,7 @@ while True:
 	unread = r.search(queryString)
 
 	for setting in unread:
-		if setting.title[0,len(settingsPrefix)] == settingsPrefix:
+		if setting.title.find(settingsPrefix) == 0:
 			subToCheck = setting.title[len(settingsPrefix),]
 			checkSub(subToCheck)
 
