@@ -35,6 +35,15 @@ def checkSub(sub):
 	print ("Looking for battles at /r/" + sub)
 	subreddit = r.get_subreddit(sub)
 	for submission in subreddit.get_new():
+		# Check to see if I replied yet
+		skipSubmission = false;
+		for comment in submission.comments:
+			if comment.author == os.environ['REDDIT_USER']:
+				skipSubmission = true
+				break
+		if skipSubmission:
+			continue
+
 		# Prepare Battle object for new battle
 		battle.clear()
 		orig_text = submission.selftext
@@ -58,13 +67,12 @@ def checkSub(sub):
 					# Call the appropriate function for this token
 					powerWords[powerWord](orig_text[begin:end].strip(), battle)
 
-		print ("<<>>")
-
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			r.send_message('Moose_Hole', 'A Battle!', str(battle))
-			print (str(battle))
+			submission.reply(str(battle))
+#			r.send_message('Moose_Hole', 'A Battle!', str(battle))
+#			print (str(battle))
 
 		
 
@@ -81,4 +89,4 @@ while True:
 			checkSub(subToCheck)
 
 	# Try again in this many seconds
-	time.sleep(30)
+	time.sleep(60)

@@ -136,7 +136,7 @@ class Battle:
 	# True if Battle has enough info to process
 	def isValid(self):
 		print ("Battle checking valid for " + self.name + " length " + str(len(self.name)))
-		return len(self.name) > 0
+		return len(self.name) > 0 && len(self.factions) >= 2
 
 	# Resets the Battle
 	def clear(self):
