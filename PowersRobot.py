@@ -70,7 +70,7 @@ def checkSub(sub):
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			submission.reply(str(battle))
+			submission.add_comment(str(battle))
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
 #			print (str(battle))
 
