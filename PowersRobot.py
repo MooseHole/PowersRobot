@@ -32,10 +32,12 @@ powerWords = {
 battle = Battle()
 
 def checkSub(sub):
-	for submission in sub.get_new():
+	print ("Looking for battles at /r/" + sub)
+	subreddit = r.get_subreddit(sub)
+	for submission in subreddit.get_new():
 		# Prepare Battle object for new battle
 		battle.clear()
-		orig_text = msg.selftext
+		orig_text = submission.selftext
 		op_text = orig_text.lower()
 
 		# Check each token
@@ -75,7 +77,7 @@ while True:
 
 	for setting in unread:
 		if setting.title.find(settingsPrefix) == 0:
-			subToCheck = setting.title[len(settingsPrefix),]
+			subToCheck = setting.title[len(settingsPrefix):]
 			checkSub(subToCheck)
 
 	# Try again in this many seconds
