@@ -96,7 +96,7 @@ while True:
 	for setting in settings:
 		if setting.title.find(settingsPrefix) == 0:
 			subToCheck = setting.title[len(settingsPrefix):].strip()
-			// Subs don't have spaces
+			# Subs don't have spaces
 			if (subToCheck.find(" ") >= 0):
 				continue
 
