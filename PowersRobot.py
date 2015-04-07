@@ -38,11 +38,15 @@ def checkSub(sub):
 		# Check to see if I replied yet
 		skipSubmission = False;
 		for comment in submission.comments:
+			print ("Comment author is " + comment.author + " and I am " + os.environ['REDDIT_USER']
 			if comment.author == os.environ['REDDIT_USER']:
+				print ("Skipping this submission because I replied!")
 				skipSubmission = True
 				break
 		if skipSubmission:
 			continue
+
+		print ("Checking for battle")
 
 		# Prepare Battle object for new battle
 		battle.clear()
