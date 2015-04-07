@@ -252,7 +252,7 @@ class Setup:
 		self.units.append(Unit(name, cv, percent, region))
 		
 	def getCV(self, region, name):
-		for unit in units:
+		for unit in self.units:
 			if unit.getRegion() == region and unit.getName() == name:
 				return unit.getCombatValue()
 		return 0
