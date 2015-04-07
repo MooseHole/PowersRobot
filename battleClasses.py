@@ -255,6 +255,7 @@ class Setup:
 	def getCV(self, region, name):
 		print ("Looking for " + name + " from " + region)
 		for unit in self.units:
+			print ("Testing region " + unit.getRegion() + " == " + region + " and name " + unit.getName() + " == " + name)
 			if unit.getRegion() == region and unit.getName() == name:
 				print ("Found unit!  Returning cv: " + str(unit.getCombatValue()))
 				return unit.getCombatValue()
