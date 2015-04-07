@@ -59,7 +59,7 @@ def SetUnits(text, battle):
 		cv = float(region)
 		region = ''
 
-		unit = Unit(name, cv, region)
+		unit = Unit(name, cv)
 		units = Units(unit, amount)
 		faction.addUnits(units)
 	except ValueError:
