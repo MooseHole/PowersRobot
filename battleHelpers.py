@@ -54,9 +54,9 @@ def SetUnits(text, battle, setup):
 		region = unitsParameters[:space].strip()
 		name = unitsParameters[space:].strip()
 
-	# Use a direct combat value if region is an integer
+	# Use a direct combat value if region is a float
 	try:
-		cv = int(region)
+		cv = float(region)
 		region = ''
 	# Use the region from setup
 	except ValueError:

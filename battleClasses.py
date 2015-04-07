@@ -5,7 +5,7 @@ class Unit:
 		self.name = name	# What the unit is called
 		self.region = region	# Where the unit was created (affects combatValue)
 		self.percentage = percentage	# The normal mix of this unit
-		self.combatValue = int(combatValue) # Strength of the unit
+		self.combatValue = float(combatValue) # Strength of the unit
 
 	def getName(self):
 		return self.name
@@ -17,7 +17,7 @@ class Unit:
 		return self.region
 
 	def getCombatValue(self):
-		return int(self.combatValue)
+		return float(self.combatValue)
 
 	def __str__(self):
 		return self.name + " from " + self.region + " CV: " + str(self.combatValue)
@@ -26,11 +26,11 @@ class Unit:
 class Units:
 	def __init__(self, unit, amount):
 		self.unit = unit	# A Unit object
-		self.amount = int(amount)	# The amount of the Unit in this group
+		self.amount = float(amount)	# The amount of the Unit in this group
 
 	# The strength of the group
 	def getCombatValue(self):
-		return int(self.unit.getCombatValue()) * self.amount
+		return float(self.unit.getCombatValue()) * self.amount
 
 	def getTableRow(self):
 		return "|" + str(self.amount) + "|" + self.unit.getRegion() + "|" + self.unit.getName() + "|" + str(self.getCombatValue())
@@ -83,7 +83,7 @@ class Faction:
 		cv = 0
 
 		for units in self.units:
-			cv += int(units.getCombatValue())
+			cv += float(units.getCombatValue())
 
 		return cv
 
