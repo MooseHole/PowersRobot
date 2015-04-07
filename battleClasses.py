@@ -136,6 +136,12 @@ class Battle:
 
 	def addTerrain(self, terrain):
 		self.terrain = terrain
+		
+	def addSetup(self, setup):
+		self.setup = setup
+		
+	def getSetup(self):
+		return self.setup
 
 	# True if Battle has enough info to process
 	def isValid(self):
@@ -147,6 +153,7 @@ class Battle:
 		self.name = ''
 		self.factions = []
 		self.terrain = Terrain()
+		self.setup = Setup()
 
 	def __str__(self):
 		output = self.name + " in " + str(self.terrain) + "\n\n"

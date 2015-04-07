@@ -30,7 +30,7 @@ def SetCommander(text, battle):
 	factionSplit[0].addCommander(factionSplit[1])
 		
 # Set a Units of the Battle in the correct Faction
-def SetUnits(text, battle, setup):
+def SetUnits(text, battle):
 	name = ''
 	cv = 0
 	region = ''
@@ -60,7 +60,7 @@ def SetUnits(text, battle, setup):
 		region = ''
 	# Use the region from setup
 	except ValueError:
-		cv = setup.getCV(region, name)
+		cv = battle.getSetup().getCV(region, name)
 
 	unit = Unit(name, cv, region)
 	units = Units(unit, amount)
