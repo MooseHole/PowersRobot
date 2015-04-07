@@ -38,7 +38,7 @@ def checkSub(sub):
 		# Check to see if I replied yet
 		skipSubmission = False;
 		for comment in submission.comments:
-			pprint(vars(comment.author))
+			print(vars(comment.author))
 #			print ("Comment author is " + comment.author + " and I am " + os.environ['REDDIT_USER'])
 
 			if comment.author == os.environ['REDDIT_USER']:
