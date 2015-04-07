@@ -36,10 +36,10 @@ def checkSub(sub):
 	subreddit = r.get_subreddit(sub)
 	for submission in subreddit.get_new():
 		# Check to see if I replied yet
-		skipSubmission = false;
+		skipSubmission = False;
 		for comment in submission.comments:
 			if comment.author == os.environ['REDDIT_USER']:
-				skipSubmission = true
+				skipSubmission = True
 				break
 		if skipSubmission:
 			continue
