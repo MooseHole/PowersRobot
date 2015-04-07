@@ -106,6 +106,9 @@ while True:
 
 			# Check each token
 			for settingWord in settingWords.keys():
+				position = 0
+				end = 0
+
 				# Look for the token for as many times as it appears in the message
 				while True:
 					position = op_text.find(settingWord, end)
