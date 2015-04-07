@@ -46,7 +46,8 @@ while True:
 
 		# Prepare Battle object for new battle
 		battle.clear()
-		orig_text = msg.body
+#		orig_text = msg.body
+		orig_text = msg.selftext
 		op_text = orig_text.lower()
 
 		# Check each token
