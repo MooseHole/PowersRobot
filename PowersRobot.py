@@ -31,22 +31,10 @@ powerWords = {
 # Set up a single Battle object to work on
 battle = Battle()
 
-# Main loop
-while True:
-	# Check own subreddit
-	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'Settings /r/*'"
-	print (queryString)
-	unread = r.search(queryString)
-	print (unread)
-
-	# Check unread messages
-#	unread = r.get_unread(limit=None)
-	for msg in unread:
-		print ("vvvv")
-
+def checkSub(sub):
+	for submission in sub.get_new():
 		# Prepare Battle object for new battle
 		battle.clear()
-#		orig_text = msg.body
 		orig_text = msg.selftext
 		op_text = orig_text.lower()
 
@@ -76,9 +64,19 @@ while True:
 			r.send_message('Moose_Hole', 'A Battle!', str(battle))
 			print (str(battle))
 
-		# Don't read this message again
-		msg.mark_as_read()
-		print ("^^^^")
+		
+
+# Main loop
+while True:
+	# Check own subreddit
+	settingsPrefix = "Settings /r/"
+	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
+	unread = r.search(queryString)
+
+	for setting in unread:
+		if setting.title[0,len(settingsPrefix)] == settingsPrefix:
+			subToCheck = setting.title[len(settingsPrefix),]
+			checkSub(subToCheck)
 
 	# Try again in this many seconds
 	time.sleep(30)
