@@ -249,15 +249,20 @@ class Setup:
 	def addUnit(self, name, cv, percent, region):
 		print ("Setting up unit " + name + " " + cv + " " + percent + " " + region)
 		self.units.append(Unit(name, cv, percent, region))
-		
-	def getCV(self, region, name):
-		print ("Looking for " + name + " from " + region)
+
+	def getUnit(self, region, name):
 		for unit in self.units:
-			print ("Testing region " + unit.getRegion() + " == " + region + " and name " + unit.getName() + " == " + name)
 			if unit.getRegion() == region and unit.getName() == name:
-				print ("Found unit!  Returning cv: " + str(unit.getCombatValue()))
-				return unit.getCombatValue()
-		return 0
+				return unit
+
+		return Unit(name, 0)
 				
+	def getAllUnits(self, region):
+		unitArray = []
+		for unit in self.units:
+			if unit.getRegion() == region:
+				unitArray.append(unit)
+
+		return unitArray
 
 	

@@ -58,13 +58,23 @@ def SetUnits(text, battle):
 	try:
 		cv = float(region)
 		region = ''
-	# Use the region from setup
-	except ValueError:
-		cv = battle.getSetup().getCV(region, name)
 
-	unit = Unit(name, cv, region)
-	units = Units(unit, amount)
-	faction.addUnits(units)
+		unit = Unit(name, cv, region)
+		units = Units(unit, amount)
+		faction.addUnits(units)
+	except ValueError:
+		# Use the regional values from setup
+		if name == '':
+			# Get the standard setup from the region
+			unitArray = battle.getSetup().getAllUnits(region)
+			for unit in unitArray:
+				units = Units(unit, amount * (unit.getPercentage() / 100))
+				faction.addUnits(units)
+		else:
+			unit = battle.getSetup().getUnit(region, name)
+			units = Units(unit, amount)
+			faction.addUnits(units)
+
 
 # Process a confirmation
 def DoConfirm(text, battle):
