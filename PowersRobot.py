@@ -18,7 +18,10 @@ r = praw.Reddit('python:moosehole.powersrobo:v0.0.2 (by /u/Moose_Hole)'
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 # Look for these tokens
-powerWords = {
+settingWords = {
+		'[[unit '	: SetSettingUnit}
+
+battleWords = {
 		'[[battle '	: SetBattle, 
 		'[[terrain'	: SetTerrain,
 		'[[faction '	: SetFaction,
@@ -30,6 +33,7 @@ powerWords = {
 
 # Set up a single Battle object to work on
 battle = Battle()
+setup = Setup()
 
 def checkSub(sub):
 	print ("Looking for battles at /r/" + sub)
@@ -55,13 +59,13 @@ def checkSub(sub):
 		op_text = orig_text.lower()
 
 		# Check each token
-		for powerWord in powerWords.keys():
+		for battleWord in battleWords.keys():
 			position = 0
 			end = 0
 
 			# Look for the token for as many times as it appears in the message
 			while True:
-				position = op_text.find(powerWord, end)
+				position = op_text.find(battleWord, end)
 				if position < 0:
 					break # Token not found
 
@@ -70,7 +74,7 @@ def checkSub(sub):
 				end = op_text.find(']]', position)
 				if end > begin:
 					# Call the appropriate function for this token
-					powerWords[powerWord](orig_text[begin:end].strip(), battle)
+					battleWords[battleWord](orig_text[begin:end].strip(), battle)
 
 		# If this is a real battle
 		if battle.isValid():
@@ -87,11 +91,34 @@ while True:
 	settingsPrefix = "Settings /r/"
 	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
 	print(queryString)
-	unread = r.search(queryString)
+	settings = r.search(queryString)
 
-	for setting in unread:
+	for setting in settings:
 		if setting.title.find(settingsPrefix) == 0:
-			subToCheck = setting.title[len(settingsPrefix):]
+			subToCheck = setting.title[len(settingsPrefix):].strip()
+			// Subs don't have spaces
+			if (subToCheck.find(" ") >= 0):
+				continue
+
+			setup.clear()
+			orig_text = setting.selftext
+			op_text = orig_text.lower()
+
+			# Check each token
+			for settingWord in settingWords.keys():
+				# Look for the token for as many times as it appears in the message
+				while True:
+					position = op_text.find(settingWord, end)
+					if position < 0:
+						break # Token not found
+
+					# Isolate the parameters
+					begin = op_text.find(' ', position)
+					end = op_text.find(']]', position)
+					if end > begin:
+						# Call the appropriate function for this token
+						settingWords[settingWord](orig_text[begin:end].strip(), setup)
+
 			checkSub(subToCheck)
 
 	# Try again in this many seconds

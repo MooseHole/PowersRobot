@@ -1,13 +1,17 @@
 
 # A single unit
 class Unit:
-	def __init__(self, name, combatValue, region=''):
+	def __init__(self, name, combatValue, percentage=0, region=''):
 		self.name = name	# What the unit is called
 		self.region = region	# Where the unit was created (affects combatValue)
+		self.percentage = percentage	# The normal mix of this unit
 		self.combatValue = int(combatValue) # Strength of the unit
 
 	def getName(self):
 		return self.name
+
+	def getPercentage(self):
+		return self.percentage
 
 	def getRegion(self):
 		return self.region
@@ -227,3 +231,24 @@ class Battle:
 			output += "|\n"
 			
 		return output
+
+# Main holder of the settings
+class Setup:
+	def __init__(self):
+		self.clear()
+
+	# Resets the Setup
+	def clear(self):
+		self.units = []
+
+	def addUnit(self, name, cv, percent, region):
+		self.units.append(Unit(name, cv, percent, region))
+		
+	def getCV(self, region, name):
+		for unit in units:
+			if unit.getRegion() == region and unit.getName() == name:
+				return unit.getCombatValue()
+		return 0
+				
+
+	

@@ -30,7 +30,7 @@ def SetCommander(text, battle):
 	factionSplit[0].addCommander(factionSplit[1])
 		
 # Set a Units of the Battle in the correct Faction
-def SetUnits(text, battle):
+def SetUnits(text, battle, setup):
 	name = ''
 	cv = 0
 	region = ''
@@ -58,8 +58,9 @@ def SetUnits(text, battle):
 	try:
 		cv = int(region)
 		region = ''
+	# Use the region from setup
 	except ValueError:
-		cv = 0
+		cv = setup.getCV(region, name)
 
 	unit = Unit(name, cv, region)
 	units = Units(unit, amount)
@@ -74,3 +75,15 @@ def DoConfirm(text, battle):
 def DoDelete(text, battle):
 	print ("Found a Delete: " + text)
 	return
+	
+def SetSettingUnit(text, setup):
+	# text: Region Name(Spaces OK) Percentage% CV
+	token = text.strip().find(' ')
+	parameters = text[token:].strip()
+	# parameters: Name(Spaces OK) Percentage% CV
+	tokenPercent = parameters.find('%')
+	token = parameters.rfind(" ", 0, tokenPercent)
+	name = parameters[:token].strip()
+	percent = parameters[token:tokenPercent].strip()
+	cv = parameters[tokenPercent:].strip()
+	setup.addUnit(name, cv, percent, region)
