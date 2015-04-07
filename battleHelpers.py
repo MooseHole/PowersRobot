@@ -86,5 +86,5 @@ def SetSettingUnit(text, setup):
 	token = parameters.rfind(" ", 0, tokenPercent)
 	name = parameters[:token].strip()
 	percent = parameters[token:tokenPercent].strip()
-	cv = parameters[tokenPercent:].strip()
+	cv = parameters[tokenPercent+1:].strip()
 	setup.addUnit(name, cv, percent, region)
