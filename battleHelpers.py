@@ -79,6 +79,7 @@ def DoDelete(text, battle):
 def SetSettingUnit(text, setup):
 	# text: Region Name(Spaces OK) Percentage% CV
 	token = text.strip().find(' ')
+	region = text[:token]
 	parameters = text[token:].strip()
 	# parameters: Name(Spaces OK) Percentage% CV
 	tokenPercent = parameters.find('%')
