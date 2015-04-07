@@ -35,7 +35,9 @@ battle = Battle()
 while True:
 	# Check own subreddit
 	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "', title:'/r/* Settings'"
+	print (queryString)
 	unread = r.search(queryString)
+	print (unread)
 
 	# Check unread messages
 #	unread = r.get_unread(limit=None)
