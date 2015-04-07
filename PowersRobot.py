@@ -32,8 +32,8 @@ battleWords = {
 		'[[delete'	: DoDelete}
 
 # Set up a single Battle object to work on
-battle = Battle()
 setup = Setup()
+battle = Battle(setup)
 
 def checkSub(sub):
 	print ("Looking for battles at /r/" + sub)

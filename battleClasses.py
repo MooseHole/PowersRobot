@@ -116,8 +116,9 @@ class Terrain:
 
 # Main holder of the battle
 class Battle:
-	def __init__(self):
+	def __init__(self, setup):
 		self.clear()
+		self.setup = setup
 
 	def addBattle(self, name):
 		self.name = name
@@ -137,9 +138,6 @@ class Battle:
 	def addTerrain(self, terrain):
 		self.terrain = terrain
 		
-	def addSetup(self, setup):
-		self.setup = setup
-		
 	def getSetup(self):
 		return self.setup
 
@@ -153,7 +151,6 @@ class Battle:
 		self.name = ''
 		self.factions = []
 		self.terrain = Terrain()
-		self.setup = Setup()
 
 	def __str__(self):
 		output = self.name + " in " + str(self.terrain) + "\n\n"
@@ -246,6 +243,7 @@ class Setup:
 
 	# Resets the Setup
 	def clear(self):
+		print ("Clearing setup!")
 		self.units = []
 
 	def addUnit(self, name, cv, percent, region):
