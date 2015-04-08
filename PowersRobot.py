@@ -140,7 +140,7 @@ while True:
 					if beginParameters >= 0:
 						# Call the appropriate function for this token
 						settingWords[settingWord](element[beginParameters:end].strip(), setup)
-					position++
+					position = position + 1
 
 			checkSub(subToCheck)
 
