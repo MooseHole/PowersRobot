@@ -87,7 +87,6 @@ def checkSubForNewBattles(sub):
 		# Check each token
 		for battleWord in battleWords.keys():
 			position = 0
-			print ("Finding" + battleWord)
 
 			# Look for the token for as many times as it appears in the message
 			while True:
@@ -100,15 +99,12 @@ def checkSubForNewBattles(sub):
 				end = element.find(endTag)
 				element = element[:end+len(endTag)].strip()
 				beginParameters = element.find(' ')
-				print ("Found " + battleWord + " at " + str(position) + "  element: " + element + "  beginParameters: " + str(beginParameters) + "  end: " + str(end))
 				if beginParameters > 0 and end > beginParameters:
 					elements += element
 					parameters = element[beginParameters:end].strip()
 					# Call the appropriate function for this token
 					battleWords[battleWord](parameters, battle)
 				position = position + 1
-
-		print (elements)
 
 		# If this is a real battle
 		if battle.isValid():
