@@ -62,7 +62,7 @@ def checkSubForNewBattles(sub):
 #		skipSubmission = False;
 
 		# Does the database already have this battle?		
-		cursor.execute("SELECT \"SubmissionID\" FROM \"Battles\" WHERE \"SubmissionID\" = \"" + submission.id + "\"")
+		cursor.execute("SELECT \"SubmissionID\" FROM \"Battles\" WHERE \"SubmissionID\" = '" + submission.id + "'")
 		if cursor.rowcount > 0:
 			continue
 
