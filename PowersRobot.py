@@ -32,18 +32,21 @@ r = praw.Reddit('python:moosehole.powersrobo:v0.0.2 (by /u/Moose_Hole)'
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 # Look for these tokens
+beginTag = "[["
+endTag = "]]"
+
 settingWords = {
-		'[[unit '	: SetSettingUnit}
+		beginTag + "unit "	: SetSettingUnit}
 
 battleWords = {
-		'[[battle '	: SetBattle, 
-		'[[terrain'	: SetTerrain,
-		'[[faction '	: SetFaction,
-		'[[user '	: SetUser,
-		'[[commander '	: SetCommander,
-		'[[units '	: SetUnits,
-		'[[confirm'	: DoConfirm,
-		'[[delete'	: DoDelete}
+		beginTag + "battle "	: SetBattle, 
+		beginTag + "terrain"	: SetTerrain,
+		beginTag + "faction "	: SetFaction,
+		beginTag + "user "	: SetUser,
+		beginTag + "commander "	: SetCommander,
+		beginTag + "units "	: SetUnits,
+		beginTag + "confirm"	: DoConfirm,
+		beginTag + "delete"	: DoDelete}
 
 # Set up a single Battle object to work on
 setup = Setup()
@@ -85,7 +88,7 @@ def checkSub(sub):
 
 				# Isolate the parameters
 				begin = op_text.find(' ', position)
-				end = op_text.find(']]', position)
+				end = op_text.find(endTag, position)
 				if end > begin:
 					# Call the appropriate function for this token
 					battleWords[battleWord](orig_text[begin:end].strip(), battle)
@@ -121,20 +124,23 @@ while True:
 			# Check each token
 			for settingWord in settingWords.keys():
 				position = 0
-				end = 0
 
 				# Look for the token for as many times as it appears in the message
 				while True:
-					position = op_text.find(settingWord, end)
+					position = op_text.find(settingWord, position)
 					if position < 0:
 						break # Token not found
 
 					# Isolate the parameters
-					begin = op_text.find(' ', position)
-					end = op_text.find(']]', position)
-					if end > begin:
+					element = orig_text[position:]
+					end = element.find(endTag)
+					element = orig_text[position:end+len(endTag)]
+					beginParameters = element.find(' ', position)
+					parameters = element[beginParameters:end]
+					if beginParameters >= 0:
 						# Call the appropriate function for this token
-						settingWords[settingWord](orig_text[begin:end].strip(), setup)
+						settingWords[settingWord](element[beginParameters:end].strip(), setup)
+					position++
 
 			checkSub(subToCheck)
 
