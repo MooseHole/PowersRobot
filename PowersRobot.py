@@ -152,8 +152,9 @@ while True:
 					element = orig_text[position:]
 					end = element.find(endTag)
 					element = element[:end+len(endTag)].strip()
-					beginParameters = element.find(' ', position)
+					beginParameters = element.find(' ')
 					if beginParameters > 0 and end > beginParameters:
+						elements += element
 						parameters = element[beginParameters:end].strip()
 						# Call the appropriate function for this token
 						settingWords[settingWord](parameters, setup)
