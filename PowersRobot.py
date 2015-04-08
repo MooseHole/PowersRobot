@@ -26,6 +26,8 @@ conn = psycopg2.connect(
     port=url.port
 )
 
+cursor = conn.cursor()
+
 # Login
 r = praw.Reddit('python:moosehole.powersrobo:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
@@ -52,12 +54,18 @@ battleWords = {
 setup = Setup()
 battle = Battle(setup)
 
-def checkSub(sub):
+def checkSubForNewBattles(sub):
 	print ("Looking for battles at /r/" + sub)
 	subreddit = r.get_subreddit(sub)
-	for submission in subreddit.get_new():
+	for submission in subreddit.get_new(limit=100):
 		# Check to see if I replied yet
-		skipSubmission = False;
+#		skipSubmission = False;
+
+		# Does the database already have this battle?		
+		cursor.execute("""SELECT SubmissionID FROM Battles WHERE SubmissionID = '" + submission.id "'""")
+		if cursor.rowcount > 0:
+			continue
+
 		for comment in submission.comments:
 			print ("Comment author is " + comment.author.name + " and I am " + os.environ['REDDIT_USER'])
 
@@ -74,29 +82,39 @@ def checkSub(sub):
 		battle.clear()
 		orig_text = submission.selftext
 		op_text = orig_text.lower()
+		elements = ''
 
 		# Check each token
 		for battleWord in battleWords.keys():
 			position = 0
-			end = 0
 
 			# Look for the token for as many times as it appears in the message
 			while True:
-				position = op_text.find(battleWord, end)
+				position = op_text.find(battleWord, position)
 				if position < 0:
 					break # Token not found
 
 				# Isolate the parameters
-				begin = op_text.find(' ', position)
-				end = op_text.find(endTag, position)
-				if end > begin:
+				element = orig_text[position:]
+				end = element.find(endTag)
+				element = element[:end+len(endTag)].strip()
+				beginParameters = element.find(' ', position)
+				if beginParameters > 0 and end > beginParameters:
+					elements += element
+					parameters = element[beginParameters:end].strip()
 					# Call the appropriate function for this token
-					battleWords[battleWord](orig_text[begin:end].strip(), battle)
+					battleWords[battleWord](parameters, battle)
+				position = position + 1
 
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			submission.add_comment(str(battle))
+			print (submission.add_comment(str(battle)))
+			print (elements)
+			print (submission.id)
+#			cursor.execute("""INSERT INTO Battles (SubmissionID, BattleContent) VALUES (%s, %s)""", (submission.id, elements))
+#			conn.commit()
+
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
 #			print (str(battle))
 
@@ -136,18 +154,16 @@ while True:
 					end = element.find(endTag)
 					element = element[:end+len(endTag)].strip()
 					beginParameters = element.find(' ', position)
-					print ("element: " + element)
-					print ("position: " + str(position))
-					print ("beginParameters: " + str(beginParameters))
-					print ("end: " + str(end))
 					if beginParameters > 0 and end > beginParameters:
 						parameters = element[beginParameters:end].strip()
-						print ("parameters: " + parameters)
 						# Call the appropriate function for this token
 						settingWords[settingWord](parameters, setup)
 					position = position + 1
 
-			checkSub(subToCheck)
+			checkSubForNewBattles(subToCheck)
 
 	# Try again in this many seconds
 	time.sleep(60)
+
+cursor.close()
+con.close()
