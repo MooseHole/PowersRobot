@@ -109,10 +109,18 @@ def checkSubForNewBattles(sub):
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			print (submission.add_comment(str(battle)))
+			submission.add_comment(str(battle))
+			battleTableId = ''
+			for comment in submission.comments:
+				if comment.author.name == os.environ['REDDIT_USER'] and comment.body == str(battle):
+					battleTableId = comment.id
+					break
+
 			print (elements)
+			print (battleTableId)
 			print (submission.id)
-#			cursor.execute("""INSERT INTO Battles (SubmissionID, BattleContent) VALUES (%s, %s)""", (submission.id, elements))
+#			cursor.execute("INSERT INTO \"Battles\
+ (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s)""", (submission.id, battleTableId, elements))
 #			conn.commit()
 
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
