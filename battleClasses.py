@@ -233,6 +233,20 @@ class Battle:
 					output += "||||"
 
 			output += "|\n"
+
+		output += "\n\nTo begin battle  \n"
+	
+		anyUsers = False
+		for faction in self.factions:
+			users = faction.getUsers()
+			for user in users:
+				anyUsers = True
+				output += user + " respond [[Confirm]]  \n"
+		if anyUsers:
+			output += "--OR--  \n"
+		output += "moderator respond [[Confirm override]]  \n"
+		output += "\nTo delete battle:  \n"
+		output += "moderator respond [[Delete]]  \n"
 			
 		return output
 
