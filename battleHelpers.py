@@ -5,6 +5,7 @@ from battleClasses import *
 def GetFactionFromText(text, battle):
 	space = text.find(' ')
 	faction = battle.getFaction(text[:space])
+	print ("GetFactionFromText returning [" + faction + ", " + text[space:] + "]")
 	return [faction, text[space:]]
 
 # Set up the Battle name
