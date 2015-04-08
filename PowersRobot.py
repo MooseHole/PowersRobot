@@ -59,22 +59,9 @@ def checkSubForNewBattles(sub):
 	print ("Looking for battles at /r/" + sub)
 	subreddit = r.get_subreddit(sub)
 	for submission in subreddit.get_new(limit=100):
-		# Check to see if I replied yet
-		skipSubmission = False;
-
 		# Does the database already have this battle?		
 		cursor.execute("SELECT \"SubmissionID\" FROM \"Battles\" WHERE \"SubmissionID\" = '" + submission.id + "'")
 		if cursor.rowcount > 0:
-			continue
-
-		for comment in submission.comments:
-			print ("Comment author is " + comment.author.name + " and I am " + os.environ['REDDIT_USER'])
-
-			if comment.author.name == os.environ['REDDIT_USER']:
-				print ("Skipping this submission because I replied!")
-				skipSubmission = True
-				break
-		if skipSubmission:
 			continue
 
 		print ("Checking for battle")
@@ -112,7 +99,7 @@ def checkSubForNewBattles(sub):
 			# Process battle output
 			battleTable = submission.add_comment(str(battle))
 			
-			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s)", (submission.id, battleTable.id, battleContent, setupContent))
+			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleTableID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s, %s)", (utcnow(), submission.id, battleTable.id, battleContent, setupContent))
 			conn.commit()
 
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
