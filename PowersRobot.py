@@ -11,6 +11,7 @@ import praw
 import requests
 import psycopg2
 import urlparse
+import datetime
 from battleClasses import *
 from battleHelpers import *
 
