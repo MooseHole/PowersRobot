@@ -32,7 +32,6 @@ cursor = conn.cursor()
 r = praw.Reddit('python:moosehole.powersrobo:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
-myself = r.get_redditor(os.environ['REDDIT_USER'])
 
 # Look for these tokens
 beginTag = "[["
@@ -110,20 +109,9 @@ def checkSubForNewBattles(sub):
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			commentReturn = submission.add_comment(str(battle))
-			battleTableId = ''
-			for comment in submission.comments:
-				if comment.author.name == os.environ['REDDIT_USER'] and comment.body == str(battle):
-					battleTableId = comment.id
-					break
-
-			print ("1 " + elements)
-			print ("2 " + battleTableId)
-			print ("3 " + submission.id)
-			print ("4 " + commentReturn.id)
-			print ("5 " + myself.get_comments(limit=1)[0].id)
+			battleTable = submission.add_comment(str(battle))
 			
-#			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s)""", (submission.id, battleTableId, elements))
+			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s)""", (submission.id, battleTable.id, elements))
 #			conn.commit()
 
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
