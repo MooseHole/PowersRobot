@@ -106,6 +106,8 @@ def checkSubForNewBattles(sub):
 					battleWords[battleWord](parameters, battle)
 				position = position + 1
 
+		print (elements)
+
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
