@@ -59,7 +59,7 @@ def checkSubForNewBattles(sub):
 	subreddit = r.get_subreddit(sub)
 	for submission in subreddit.get_new(limit=100):
 		# Check to see if I replied yet
-#		skipSubmission = False;
+		skipSubmission = False;
 
 		# Does the database already have this battle?		
 		cursor.execute("SELECT \"SubmissionID\" FROM \"Battles\" WHERE \"SubmissionID\" = '" + submission.id + "'")
