@@ -134,12 +134,16 @@ while True:
 					# Isolate the parameters
 					element = orig_text[position:]
 					end = element.find(endTag)
-					element = orig_text[position:end+len(endTag)]
+					element = orig_text[position:end+len(endTag)].strip()
 					beginParameters = element.find(' ', position)
-					parameters = element[beginParameters:end]
-					if beginParameters >= 0:
+					print ("element: " + element)
+					print ("beginParameters: " + str(beginParameters))
+					print ("end: " + str(end))
+					if end > beginParameters:
+						parameters = element[beginParameters:end].strip()
+						print ("parameters: " + parameters)
 						# Call the appropriate function for this token
-						settingWords[settingWord](element[beginParameters:end].strip(), setup)
+						settingWords[settingWord](parameters, setup)
 					position = position + 1
 
 			checkSub(subToCheck)
