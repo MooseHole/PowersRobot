@@ -53,6 +53,7 @@ battleWords = {
 # Set up a single Battle object to work on
 setup = Setup()
 battle = Battle(setup)
+setupContent = ''
 
 def checkSubForNewBattles(sub):
 	print ("Looking for battles at /r/" + sub)
@@ -82,7 +83,7 @@ def checkSubForNewBattles(sub):
 		battle.clear()
 		orig_text = submission.selftext
 		op_text = orig_text.lower()
-		elements = ''
+		battleContent = ''
 
 		# Check each token
 		for battleWord in battleWords.keys():
@@ -100,7 +101,7 @@ def checkSubForNewBattles(sub):
 				element = element[:end+len(endTag)].strip()
 				beginParameters = element.find(' ')
 				if beginParameters > 0 and end > beginParameters:
-					elements += element
+					battleContent += element
 					parameters = element[beginParameters:end].strip()
 					# Call the appropriate function for this token
 					battleWords[battleWord](parameters, battle)
@@ -111,7 +112,7 @@ def checkSubForNewBattles(sub):
 			# Process battle output
 			battleTable = submission.add_comment(str(battle))
 			
-			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s, %s)""", (submission.id, battleTable.id, elements))
+			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s)", (submission.id, battleTable.id, battleContent, setupContent))
 			conn.commit()
 
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
@@ -135,6 +136,8 @@ while True:
 				continue
 
 			setup.clear()
+			setupContent = ''
+
 			orig_text = setting.selftext
 			op_text = orig_text.lower()
 
@@ -154,7 +157,7 @@ while True:
 					element = element[:end+len(endTag)].strip()
 					beginParameters = element.find(' ')
 					if beginParameters > 0 and end > beginParameters:
-						elements += element
+						setupContent += element
 						parameters = element[beginParameters:end].strip()
 						# Call the appropriate function for this token
 						settingWords[settingWord](parameters, setup)
