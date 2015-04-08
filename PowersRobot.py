@@ -121,7 +121,7 @@ def checkSubForNewBattles(sub):
 			print ("2 " + battleTableId)
 			print ("3 " + submission.id)
 			print ("4 " + commentReturn)
-			print ("5 " + myself.get_comments(limit=1)[0].id
+			print ("5 " + myself.get_comments(limit=1)[0].id)
 			
 #			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s)""", (submission.id, battleTableId, elements))
 #			conn.commit()
