@@ -257,11 +257,9 @@ class Setup:
 
 	# Resets the Setup
 	def clear(self):
-		print ("Clearing setup!")
 		self.units = []
 
 	def addUnit(self, name, cv, percent, region):
-		print ("Setting up unit " + name + " " + cv + " " + percent + " " + region)
 		self.units.append(Unit(name, cv, percent, region))
 
 	def getUnit(self, region, name):
