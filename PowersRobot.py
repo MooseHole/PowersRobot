@@ -134,12 +134,13 @@ while True:
 					# Isolate the parameters
 					element = orig_text[position:]
 					end = element.find(endTag)
-					element = orig_text[position:end+len(endTag)].strip()
+					element = element[:end+len(endTag)].strip()
 					beginParameters = element.find(' ', position)
 					print ("element: " + element)
+					print ("position: " + position)
 					print ("beginParameters: " + str(beginParameters))
 					print ("end: " + str(end))
-					if end > beginParameters:
+					if beginParameters > 0 && end > beginParameters:
 						parameters = element[beginParameters:end].strip()
 						print ("parameters: " + parameters)
 						# Call the appropriate function for this token
