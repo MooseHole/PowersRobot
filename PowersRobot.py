@@ -140,7 +140,7 @@ while True:
 					print ("position: " + position)
 					print ("beginParameters: " + str(beginParameters))
 					print ("end: " + str(end))
-					if beginParameters > 0 && end > beginParameters:
+					if beginParameters > 0 and end > beginParameters:
 						parameters = element[beginParameters:end].strip()
 						print ("parameters: " + parameters)
 						# Call the appropriate function for this token
