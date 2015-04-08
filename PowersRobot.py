@@ -87,7 +87,7 @@ def checkSubForNewBattles(sub):
 		# Check each token
 		for battleWord in battleWords.keys():
 			position = 0
-			print ("Finding" + battleWord + " in " + op_text)
+			print ("Finding" + battleWord)
 
 			# Look for the token for as many times as it appears in the message
 			while True:
@@ -100,6 +100,7 @@ def checkSubForNewBattles(sub):
 				end = element.find(endTag)
 				element = element[:end+len(endTag)].strip()
 				beginParameters = element.find(' ', position)
+				print ("Found " + battleWord + " at " + str(position) + "  element: " + element)
 				if beginParameters > 0 and end > beginParameters:
 					elements += element
 					parameters = element[beginParameters:end].strip()
