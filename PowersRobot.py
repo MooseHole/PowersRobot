@@ -137,7 +137,7 @@ while True:
 					element = element[:end+len(endTag)].strip()
 					beginParameters = element.find(' ', position)
 					print ("element: " + element)
-					print ("position: " + position)
+					print ("position: " + str(position))
 					print ("beginParameters: " + str(beginParameters))
 					print ("end: " + str(end))
 					if beginParameters > 0 and end > beginParameters:
