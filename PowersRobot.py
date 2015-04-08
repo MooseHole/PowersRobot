@@ -9,8 +9,22 @@ import os
 import time
 import praw
 import requests
+import psycopg2
+import urlparse
 from battleClasses import *
 from battleHelpers import *
+
+# Open DB
+urlparse.uses_netloc.append("postgres")
+url = urlparse.urlparse(os.environ["DATABASE_URL"])
+
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
 
 # Login
 r = praw.Reddit('python:moosehole.powersrobo:v0.0.2 (by /u/Moose_Hole)'
