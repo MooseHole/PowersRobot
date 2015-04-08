@@ -42,7 +42,7 @@ settingWords = {
 
 battleWords = {
 		beginTag + "battle "	: SetBattle, 
-		beginTag + "terrain"	: SetTerrain,
+		beginTag + "terrain "	: SetTerrain,
 		beginTag + "faction "	: SetFaction,
 		beginTag + "user "	: SetUser,
 		beginTag + "commander "	: SetCommander,
@@ -87,6 +87,7 @@ def checkSubForNewBattles(sub):
 		# Check each token
 		for battleWord in battleWords.keys():
 			position = 0
+			print ("Finding" + battleWord + " in " + op_text)
 
 			# Look for the token for as many times as it appears in the message
 			while True:
