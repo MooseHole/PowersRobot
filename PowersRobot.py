@@ -119,8 +119,7 @@ def checkSubForNewBattles(sub):
 			print (elements)
 			print (battleTableId)
 			print (submission.id)
-#			cursor.execute("INSERT INTO \"Battles\
- (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s)""", (submission.id, battleTableId, elements))
+#			cursor.execute("INSERT INTO \"Battles\" (\"SubmissionID\", \"BattleTableID\", \"BattleContent\") VALUES (%s, %s)""", (submission.id, battleTableId, elements))
 #			conn.commit()
 
 #			r.send_message('Moose_Hole', 'A Battle!', str(battle))
