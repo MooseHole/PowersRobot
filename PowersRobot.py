@@ -100,7 +100,7 @@ def checkSubForNewBattles(sub):
 				end = element.find(endTag)
 				element = element[:end+len(endTag)].strip()
 				beginParameters = element.find(' ', position)
-				print ("Found " + battleWord + " at " + str(position) + "  element: " + element)
+				print ("Found " + battleWord + " at " + str(position) + "  element: " + element + "  beginParameters: " + str(beginParameters) + "  end: " + str(end))
 				if beginParameters > 0 and end > beginParameters:
 					elements += element
 					parameters = element[beginParameters:end].strip()
