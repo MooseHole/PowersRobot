@@ -150,13 +150,13 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 
 		# If this could be a real battle
 		if len(battleContent) > 0:
-			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleTableID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleTable.id, battleContent, setupObject.getContent()))
+			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleContent, setupObject.getContent()))
 			conn.commit()
 	cursor.close()
 	
 def postBattleSetups(conn, r):
 	cursor = conn.cursor()
-	cursor.execute("SELECT \"SubmissionID\", \"BattleContent\", \"SetupContent\" FROM \"Battles\" WHERE \"SetupPosted\" = false")
+	cursor.execute("SELECT \"SubmissionID\", \"BattleContent\", \"SetupContent\" FROM \"Battles\" WHERE \"BattleTableID\" = ''")
 	results = cursor.fetchall()
 	for row in results:
 		SubmissionID = row[0]
@@ -193,7 +193,7 @@ def postBattleSetups(conn, r):
 			# Process battle output
 			submission = r.get_submission(submission_id = SubmissionID)
 			battleTable = submission.add_comment(str(battle))
-			cursor.execute("UPDATE \"Battles\" SET \"SetupPosted\" = %s WHERE \"SubmissionID\" = %s", (True, SubmissionID))
+			cursor.execute("UPDATE \"Battles\" SET \"BattleTableID\" = %s WHERE \"SubmissionID\" = %s", (battleTable, SubmissionID))
 			conn.commit()
 	cursor.close()
 
