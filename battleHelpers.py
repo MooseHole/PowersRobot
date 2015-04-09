@@ -79,13 +79,13 @@ def SetUnits(text, battle):
 
 
 # Process a confirmation
-def DoConfirm(text, battle):
-	print ("Found a Confirm: " + text)
+def DoConfirm(battleTable):
+	print ("Found a Confirm: " + battleTable.id)
 	return
 
 # Process a deletion
-def DoDelete(text, battle):
-	print ("Found a Delete: " + text)
+def DoDelete(battleTable):
+	print ("Found a Delete: " + battleTable.id)
 	return
 	
 def SetSettingUnit(text, setup):
@@ -114,7 +114,8 @@ battleWords = {
 		beginTag + "faction "	: SetFaction,
 		beginTag + "user "	: SetUser,
 		beginTag + "commander "	: SetCommander,
-		beginTag + "units "	: SetUnits,
+		beginTag + "units "	: SetUnits}
+commandWords = {
 		beginTag + "confirm"	: DoConfirm,
 		beginTag + "delete"	: DoDelete}
 
@@ -153,7 +154,22 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleContent, setupObject.getContent()))
 			conn.commit()
 	cursor.close()
-	
+
+def checkConfirmations(conn, r):
+	cursor = conn.cursor()
+	cursor.execute("SELECT \"BattleTableID\" FROM \"Battles\" WHERE \"BattleTableID\" is NOT NULL \"BattleResultID\" is NULL AND \"Delete\" = false AND \"Confirmed\" = false")
+	results = cursor.fetchall()
+	for row in results:
+		BattleTableID = row[0]
+		battleTable = r.get_submission(submission_id=BattleTableID)
+		replies = praw.helpers.flatten_tree(battleTable.comments)
+		for commandWord in commandWords.keys():
+			position = battleTable.selftext.find(commandWord)
+			if position < 0:
+				continue
+			commandWords[commandWord](battleTable)
+
+
 def postBattleSetups(conn, r):
 	cursor = conn.cursor()
 	cursor.execute("SELECT \"SubmissionID\", \"BattleContent\", \"SetupContent\" FROM \"Battles\" WHERE \"BattleTableID\" is NULL")
