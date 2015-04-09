@@ -43,6 +43,7 @@ while True:
 
 		setup = parseSetup(setting.selftext)
 
+		print(vars(subreddit))
 		print ("Looking for battles at /r/" + subreddit.subreddit_name)
 		checkSubForNewBattles(subreddit, setup, conn)
 
