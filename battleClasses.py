@@ -143,7 +143,6 @@ class Battle:
 
 	# True if Battle has enough info to process
 	def isValid(self):
-		print ("Battle checking valid for " + self.name + " length " + str(len(self.name)) + "  num factions " + str(len(self.factions)))
 		return len(self.name) > 0 and len(self.factions) >= 2
 
 	# Resets the Battle
@@ -258,6 +257,7 @@ class Setup:
 	# Resets the Setup
 	def clear(self):
 		self.units = []
+		self.content = ''
 
 	def addUnit(self, name, cv, percent, region):
 		self.units.append(Unit(name, cv, percent, region))
@@ -268,7 +268,16 @@ class Setup:
 				return unit
 
 		return Unit(name, 0)
-				
+
+	def setContent(self, content):
+		self.content = content
+
+	def addContent(self, element):
+		self.content += element
+
+	def getContent(self):
+		return self.content
+
 	def getAllUnits(self, region):
 		unitArray = []
 		for unit in self.units:

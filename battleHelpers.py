@@ -98,3 +98,149 @@ def SetSettingUnit(text, setup):
 	percent = parameters[token:tokenPercent].strip()
 	cv = parameters[tokenPercent+1:].strip()
 	setup.addUnit(name, cv, percent, region)
+
+# Look for these tokens
+beginTag = "[["
+endTag = "]]"
+
+settingWords = {
+		beginTag + "unit "	: SetSettingUnit}
+
+battleWords = {
+		beginTag + "battle "	: SetBattle, 
+		beginTag + "terrain "	: SetTerrain,
+		beginTag + "faction "	: SetFaction,
+		beginTag + "user "	: SetUser,
+		beginTag + "commander "	: SetCommander,
+		beginTag + "units "	: SetUnits,
+		beginTag + "confirm"	: DoConfirm,
+		beginTag + "delete"	: DoDelete}
+
+def checkSubForNewBattles(subreddit, setupObject, conn):
+	cursor = conn.cursor()
+	for submission in subreddit.get_new(limit=100):
+		# Does the database already have this battle?
+		cursor.execute("SELECT \"SubmissionID\" FROM \"Battles\" WHERE \"SubmissionID\" = '" + submission.id + "' LIMIT 1")
+		if cursor.rowcount > 0:
+			continue
+
+		orig_text = submission.selftext
+		op_text = orig_text.lower()
+		battleContent = ''
+
+		# Check each token
+		for battleWord in battleWords.keys():
+			position = 0
+
+			# Look for the token for as many times as it appears in the message
+			while True:
+				position = op_text.find(battleWord, position)
+				if position < 0:
+					break # Token not found
+					
+				# Isolate the elements
+				element = orig_text[position:]
+				end = element.find(endTag)
+				element = element[:end+len(endTag)].strip()
+				if end > 0:
+					battleContent += element
+				position = position + 1
+
+		# If this could be a real battle
+		if len(battleContent) > 0:
+			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleTableID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleTable.id, battleContent, setupObject.getContent()))
+			conn.commit()
+	cursor.close()
+	
+def postBattleSetups(conn):
+	cursor = conn.cursor()
+	cursor.execute("SELECT * FROM \"Battles\" WHERE \"SetupPosted\" = false")
+
+	for (BattleContent, SetupContent, SubmissionID) in cursor:
+		# Prepare Battle object for new battle
+		battle = Battle(parseSetup(SetupContent))
+		orig_text = BattleContent
+		op_text = orig_text.lower()
+
+		# Check each token
+		for battleWord in battleWords.keys():
+			position = 0
+
+			# Look for the token for as many times as it appears in the message
+			while True:
+				position = op_text.find(battleWord, position)
+				if position < 0:
+					break # Token not found
+
+				# Isolate the parameters
+				element = orig_text[position:]
+				end = element.find(endTag)
+				element = element[:end+len(endTag)].strip()
+				beginParameters = element.find(' ')
+				if beginParameters > 0 and end > beginParameters:
+					parameters = element[beginParameters:end].strip()
+					# Call the appropriate function for this token
+					battleWords[battleWord](parameters, battle)
+				position = position + 1
+
+		# If this is a real battle
+		if battle.isValid():
+			# Process battle output
+			submission = r.get_submission(submission_id = SubmissionID)
+			battleTable = submission.add_comment(str(battle))
+			cursor.execute("UPDATE \"Battles\" SET \"SetupPosted\" = %s WHERE \"SubmissionID\" = %s", (True, SubmissionID))
+			conn.commit()
+	cursor.close()
+
+def parseSetup(orig_text):
+	setupObject = Setup()
+	setupObject.clear()
+
+	op_text = orig_text.lower()
+
+	# Check each token
+	for settingWord in settingWords.keys():
+		position = 0
+
+		# Look for the token for as many times as it appears in the message
+		while True:
+			position = op_text.find(settingWord, position)
+			if position < 0:
+				break # Token not found
+
+			# Isolate the parameters
+			element = orig_text[position:]
+			end = element.find(endTag)
+			element = element[:end+len(endTag)].strip()
+			beginParameters = element.find(' ')
+			if beginParameters > 0 and end > beginParameters:
+				setupObject.addContent(element)
+				parameters = element[beginParameters:end].strip()
+				# Call the appropriate function for this token
+				settingWords[settingWord](parameters, setupObject)
+			position = position + 1
+	return setupObject
+
+def getSetupSubreddit(setupSubmission):
+	if setupSubmission.title.find(settingsPrefix) != 0:
+		print ("Setup skipping due to malformed title: " + setupSubmission.title)
+		return None
+
+	subToCheck = setupSubmission.title[len(settingsPrefix):].strip()
+	# Subs don't have spaces
+	if (subToCheck.find(" ") >= 0):
+		print ("Setup skipping due to spaces: /r/" + subToCheck)
+		return None
+
+	subreddit = r.get_subreddit(subToCheck)
+	moderators = subreddit.get_moderators()
+	if setupSubmission.author not in moderators:
+		print ("Setup skipping due to nonmoderator /u/" + setupSubmission.author.user_name + " for /r/" + subToCheck)
+		return None
+	
+	return subreddit
+	
+def getSettings(settingsPrefix)
+	# Check own subreddit for settings
+	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
+	return r.search(queryString)

@@ -27,134 +27,28 @@ conn = psycopg2.connect(
     port=url.port
 )
 
-cursor = conn.cursor()
-
 # Login
 r = praw.Reddit('python:moosehole.powersrobo:v0.0.2 (by /u/Moose_Hole)'
                 'Url: https://github.com/MooseHole/PowersRobot')
 r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
-# Look for these tokens
-beginTag = "[["
-endTag = "]]"
-
-settingWords = {
-		beginTag + "unit "	: SetSettingUnit}
-
-battleWords = {
-		beginTag + "battle "	: SetBattle, 
-		beginTag + "terrain "	: SetTerrain,
-		beginTag + "faction "	: SetFaction,
-		beginTag + "user "	: SetUser,
-		beginTag + "commander "	: SetCommander,
-		beginTag + "units "	: SetUnits,
-		beginTag + "confirm"	: DoConfirm,
-		beginTag + "delete"	: DoDelete}
-
-# Set up a single Battle object to work on
-setup = Setup()
-battle = Battle(setup)
-setupContent = ''
-
-def checkSubForNewBattles(sub):
-	print ("Looking for battles at /r/" + sub)
-	subreddit = r.get_subreddit(sub)
-	for submission in subreddit.get_new(limit=100):
-		# Does the database already have this battle?		
-		cursor.execute("SELECT \"SubmissionID\" FROM \"Battles\" WHERE \"SubmissionID\" = '" + submission.id + "'")
-		if cursor.rowcount > 0:
-			continue
-
-		print ("Checking for battle")
-
-		# Prepare Battle object for new battle
-		battle.clear()
-		orig_text = submission.selftext
-		op_text = orig_text.lower()
-		battleContent = ''
-
-		# Check each token
-		for battleWord in battleWords.keys():
-			position = 0
-
-			# Look for the token for as many times as it appears in the message
-			while True:
-				position = op_text.find(battleWord, position)
-				if position < 0:
-					break # Token not found
-
-				# Isolate the parameters
-				element = orig_text[position:]
-				end = element.find(endTag)
-				element = element[:end+len(endTag)].strip()
-				beginParameters = element.find(' ')
-				if beginParameters > 0 and end > beginParameters:
-					battleContent += element
-					parameters = element[beginParameters:end].strip()
-					# Call the appropriate function for this token
-					battleWords[battleWord](parameters, battle)
-				position = position + 1
-
-		# If this is a real battle
-		if battle.isValid():
-			# Process battle output
-			battleTable = submission.add_comment(str(battle))
-			
-			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleTableID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleTable.id, battleContent, setupContent))
-			conn.commit()
-
-#			r.send_message('Moose_Hole', 'A Battle!', str(battle))
-#			print (str(battle))
-
-		
 
 # Main loop
 while True:
-	# Check own subreddit
-	settingsPrefix = "Settings /r/"
-	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
-	print(queryString)
-	settings = r.search(queryString)
-
+	settings = getSettings("Settings /r/")
 	for setting in settings:
-		if setting.title.find(settingsPrefix) == 0:
-			subToCheck = setting.title[len(settingsPrefix):].strip()
-			# Subs don't have spaces
-			if (subToCheck.find(" ") >= 0):
-				continue
+		subreddit = getSetupSubreddit(setting)
+		if subreddit is None:
+			continue
 
-			setup.clear()
-			setupContent = ''
+		setup = parseSetup(setting.selftext)
 
-			orig_text = setting.selftext
-			op_text = orig_text.lower()
+		print ("Looking for battles at /r/" + subreddit.name)
+		checkSubForNewBattles(subreddit, setup, conn)
 
-			# Check each token
-			for settingWord in settingWords.keys():
-				position = 0
-
-				# Look for the token for as many times as it appears in the message
-				while True:
-					position = op_text.find(settingWord, position)
-					if position < 0:
-						break # Token not found
-
-					# Isolate the parameters
-					element = orig_text[position:]
-					end = element.find(endTag)
-					element = element[:end+len(endTag)].strip()
-					beginParameters = element.find(' ')
-					if beginParameters > 0 and end > beginParameters:
-						setupContent += element
-						parameters = element[beginParameters:end].strip()
-						# Call the appropriate function for this token
-						settingWords[settingWord](parameters, setup)
-					position = position + 1
-
-			checkSubForNewBattles(subToCheck)
+	postBattleSetups(conn)
 
 	# Try again in this many seconds
 	time.sleep(60)
 
-cursor.close()
-con.close()
+conn.close()
