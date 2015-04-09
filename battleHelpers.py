@@ -157,10 +157,10 @@ def postBattleSetups(conn, r):
 	cursor = conn.cursor()
 	cursor.execute("SELECT * FROM \"Battles\" WHERE \"SetupPosted\" = false")
 
-	for (BattleContent, SetupContent, SubmissionID) in cursor:
+	for row in cursor:
 		# Prepare Battle object for new battle
-		battle = Battle(parseSetup(SetupContent))
-		orig_text = BattleContent
+		battle = Battle(parseSetup(row["SetupContent"]))
+		orig_text = row["BattleContent"]
 		op_text = orig_text.lower()
 
 		# Check each token
@@ -187,9 +187,9 @@ def postBattleSetups(conn, r):
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			submission = r.get_submission(submission_id = SubmissionID)
+			submission = r.get_submission(submission_id = row["SubmissionID"])
 			battleTable = submission.add_comment(str(battle))
-			cursor.execute("UPDATE \"Battles\" SET \"SetupPosted\" = %s WHERE \"SubmissionID\" = %s", (True, SubmissionID))
+			cursor.execute("UPDATE \"Battles\" SET \"SetupPosted\" = %s WHERE \"SubmissionID\" = %s", (True, row["SubmissionID"]))
 			conn.commit()
 	cursor.close()
 
