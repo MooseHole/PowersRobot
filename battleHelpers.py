@@ -155,12 +155,15 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 	
 def postBattleSetups(conn, r):
 	cursor = conn.cursor()
-	cursor.execute("SELECT * FROM \"Battles\" WHERE \"SetupPosted\" = false")
+	cursor.execute("SELECT \"SubmissionID\", \"BattleContent\", \"SetupContent\" FROM \"Battles\" WHERE \"SetupPosted\" = false")
 
 	for row in cursor:
+		SubmissionID = row[0]
+		BattleContent = row[1]
+		SetupContent = row[2]
 		# Prepare Battle object for new battle
-		battle = Battle(parseSetup(row["SetupContent"]))
-		orig_text = row["BattleContent"]
+		battle = Battle(parseSetup(SetupContent))
+		orig_text = BattleContent
 		op_text = orig_text.lower()
 
 		# Check each token
@@ -187,9 +190,9 @@ def postBattleSetups(conn, r):
 		# If this is a real battle
 		if battle.isValid():
 			# Process battle output
-			submission = r.get_submission(submission_id = row["SubmissionID"])
+			submission = r.get_submission(submission_id = SubmissionID)
 			battleTable = submission.add_comment(str(battle))
-			cursor.execute("UPDATE \"Battles\" SET \"SetupPosted\" = %s WHERE \"SubmissionID\" = %s", (True, row["SubmissionID"]))
+			cursor.execute("UPDATE \"Battles\" SET \"SetupPosted\" = %s WHERE \"SubmissionID\" = %s", (True, SubmissionID))
 			conn.commit()
 	cursor.close()
 
