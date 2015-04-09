@@ -193,7 +193,7 @@ def postBattleSetups(conn, r):
 			# Process battle output
 			submission = r.get_submission(submission_id = SubmissionID)
 			battleTable = submission.add_comment(str(battle))
-			cursor.execute("UPDATE \"Battles\" SET \"BattleTableID\" = %s WHERE \"SubmissionID\" = %s", (battleTable, SubmissionID))
+			cursor.execute("UPDATE \"Battles\" SET \"BattleTableID\" = %s WHERE \"SubmissionID\" = %s", (battleTable.id, SubmissionID))
 			conn.commit()
 	cursor.close()
 
