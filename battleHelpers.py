@@ -240,7 +240,7 @@ def getSetupSubreddit(setupSubmission):
 	
 	return subreddit
 	
-def getSettings(settingsPrefix)
+def getSettings(settingsPrefix):
 	# Check own subreddit for settings
 	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
 	return r.search(queryString)
