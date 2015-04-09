@@ -222,7 +222,7 @@ def parseSetup(orig_text):
 			position = position + 1
 	return setupObject
 
-def getSetupSubreddit(setupSubmission, r):
+def getSetupSubreddit(setupSubmission, settingsPrefix, r):
 	if setupSubmission.title.find(settingsPrefix) != 0:
 		print ("Setup skipping due to malformed title: " + setupSubmission.title)
 		return None

@@ -35,9 +35,10 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 # Main loop
 while True:
-	settings = getSettings("Settings /r/", r)
+	settingsPrefix = "Settings /r/"
+	settings = getSettings(settingsPrefix, r)
 	for setting in settings:
-		subreddit = getSetupSubreddit(setting, r)
+		subreddit = getSetupSubreddit(setting, settingsPrefix, r)
 		if subreddit is None:
 			continue
 
