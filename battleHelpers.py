@@ -157,7 +157,7 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 
 def checkConfirmations(conn, r):
 	cursor = conn.cursor()
-	cursor.execute("SELECT \"BattleTableID\" FROM \"Battles\" WHERE \"BattleTableID\" is NOT NULL \"BattleResultID\" is NULL AND \"Delete\" = false AND \"Confirmed\" = false")
+	cursor.execute("SELECT \"BattleTableID\" FROM \"Battles\" WHERE \"BattleTableID\" is NOT NULL AND \"BattleResultID\" is NULL AND \"Delete\" = false AND \"Confirmed\" = false")
 	results = cursor.fetchall()
 	for row in results:
 		BattleTableID = row[0]
