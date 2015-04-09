@@ -153,7 +153,7 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 			conn.commit()
 	cursor.close()
 	
-def postBattleSetups(conn):
+def postBattleSetups(conn, r):
 	cursor = conn.cursor()
 	cursor.execute("SELECT * FROM \"Battles\" WHERE \"SetupPosted\" = false")
 
@@ -222,7 +222,7 @@ def parseSetup(orig_text):
 			position = position + 1
 	return setupObject
 
-def getSetupSubreddit(setupSubmission):
+def getSetupSubreddit(setupSubmission, r):
 	if setupSubmission.title.find(settingsPrefix) != 0:
 		print ("Setup skipping due to malformed title: " + setupSubmission.title)
 		return None
@@ -241,7 +241,7 @@ def getSetupSubreddit(setupSubmission):
 	
 	return subreddit
 	
-def getSettings(settingsPrefix):
+def getSettings(settingsPrefix, r):
 	# Check own subreddit for settings
 	queryString = "subreddit:'" + os.environ['REDDIT_USER'] + "' title:'" + settingsPrefix + "*'"
 	return r.search(queryString)

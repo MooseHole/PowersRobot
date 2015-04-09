@@ -35,9 +35,9 @@ r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
 
 # Main loop
 while True:
-	settings = getSettings("Settings /r/")
+	settings = getSettings("Settings /r/", r)
 	for setting in settings:
-		subreddit = getSetupSubreddit(setting)
+		subreddit = getSetupSubreddit(setting, r)
 		if subreddit is None:
 			continue
 
@@ -46,7 +46,7 @@ while True:
 		print ("Looking for battles at /r/" + subreddit.name)
 		checkSubForNewBattles(subreddit, setup, conn)
 
-	postBattleSetups(conn)
+	postBattleSetups(conn, r)
 
 	# Try again in this many seconds
 	time.sleep(60)
