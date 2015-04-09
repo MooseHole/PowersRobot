@@ -161,6 +161,7 @@ def checkConfirmations(conn, r):
 	results = cursor.fetchall()
 	for row in results:
 		BattleTableID = row[0]
+		print (BattleTableID)
 		battleTable = r.get_submission(submission_id=BattleTableID)
 		replies = praw.helpers.flatten_tree(battleTable.comments)
 		for commandWord in commandWords.keys():
