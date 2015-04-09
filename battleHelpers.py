@@ -150,7 +150,7 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 
 		# If this could be a real battle
 		if len(battleContent) > 0:
-			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleContent, setupObject.getContent()))
+			cursor.execute("INSERT INTO \"Battles\" (\"Timestamp\", \"SubmissionID\", \"BattleContent\", \"SetupContent\") VALUES (%s, %s, %s, %s)", (datetime.datetime.utcnow(), submission.id, battleContent, setupObject.getContent()))
 			conn.commit()
 	cursor.close()
 	
