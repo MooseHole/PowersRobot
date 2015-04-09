@@ -156,8 +156,8 @@ def checkSubForNewBattles(subreddit, setupObject, conn):
 def postBattleSetups(conn, r):
 	cursor = conn.cursor()
 	cursor.execute("SELECT \"SubmissionID\", \"BattleContent\", \"SetupContent\" FROM \"Battles\" WHERE \"SetupPosted\" = false")
-
-	for row in cursor:
+	results = cursor.fetchall()
+	for row in results:
 		SubmissionID = row[0]
 		BattleContent = row[1]
 		SetupContent = row[2]
